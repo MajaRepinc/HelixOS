@@ -1,0 +1,84 @@
+/* core structure style */
+
+/***********************************
+*           HTML Tags              *
+************************************/
+html {
+  height: 100%;
+}
+body {
+  display: block;
+  height: 100%;
+  margin: 0;
+}
+
+/***********************************
+*           Wrappers               *
+************************************/
+#wrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+/***********************************
+*             Top Bar              *
+************************************/
+#top-bar {
+  display: block;
+  width: 100%;
+  height: 5%;
+  background-color: #000;
+}
+.top-bar-component {}
+
+#left-top {}
+.left-top-component {}
+#icon-about {}
+#icon-settings {}
+#icon-apps {}
+
+#middle-top {}
+
+#right-top {}
+.right-top-component {}
+#time-date {}
+#icon-expand {}
+
+/***********************************
+*            Workspace             *
+************************************/
+#workspace {
+  display: block;
+  width: 100%;
+  height: 95%;
+  background-color: #ccc;
+}
+
+/***********************************
+*          Window Frame            *
+************************************/
+#window-frame {}
+
+#window-frame-top-bar {}
+
+#window-frame-workspace {}
+
+/***********************************
+*          Media Queries           *
+************************************/
+/*****Laptop/Desktop*****/
+@media (min-width: 1025px) { }
+
+/*****Tablet-portrait*****/
+@media (min-width: 768px) and (max-width: 1024px) { }
+
+/*****Tablet-landscape*****/
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) { }
+
+/*****Low Res Tablet, Phone-landscape*****/
+@media (min-width: 481px) and (max-width: 767px) { }
+
+/*****Phone-portrait*****/
+@media (min-width: 320px) and (max-width: 480px) { }
