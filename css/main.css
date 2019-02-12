@@ -41,10 +41,18 @@ body {
     width: 10%;
     display: inline-block;
     float: left;
+    font-size: 1.1em;
 }
 .left-top-component {
     display: inline-block;
-    padding: 8px 2px;
+    padding: 8px;
+    width: 33%;
+    box-sizing: border-box;
+    float: left;
+    text-align: center;
+}
+.left-top-component:hover {
+    background-color: #9ad3de;
 }
 #icon-about {}
 #icon-settings {}
@@ -66,10 +74,20 @@ body {
 .right-top-component {
     display: inline-block;
     padding: 8px;
-
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 1.1em;
+    float: left;
 }
-#time-date {}
-#icon-expand {}
+.right-top-component:hover {
+    background-color: #9ad3de;
+}
+#time-date {
+    width: 80%;
+}
+#icon-expand {
+    width: 20%;
+}
 
 /***********************************
 *            Workspace             *
