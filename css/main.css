@@ -59,14 +59,14 @@ body {
 #icon-apps {}
 
 #middle-top {
-    width: 70%;
+    width: 65%;
     display: inline-block;
     float: left;
     padding: 8px;
 }
 
 #right-top {
-    width: 20%;
+    width: 25%;
     display: inline-block;
     float: left;
     text-align: right;
@@ -83,10 +83,10 @@ body {
     background-color: #9ad3de;
 }
 #time-date {
-    width: 80%;
+    width: 85%;
 }
 #icon-expand {
-    width: 20%;
+    width: 15%;
 }
 
 /***********************************
