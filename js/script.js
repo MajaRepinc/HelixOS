@@ -3,23 +3,26 @@ document.addEventListener("DOMContentLoaded", function(event) {
   funStartTime();
   document.getElementById("icon-expand").onclick = function() {
       funFullscreen();
+
   };
 });
 
 function funFullscreen() {
-    var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+    const isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
       (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
       (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
       (document.msFullscreenElement && document.msFullscreenElement !== null);
      if (!isInFullScreen) {
          funOpenFullscreen();
+         console.log("opened fullscreen");
      } else {
          funCloseFullscreen();
+         console.log("closed fullscreen");
      }
 }
 
-var Draggable = function (id) {
-    var el = document.querySelector(id),
+function funDraggable(id) {
+    var element = document.querySelector(id),
         isDragReady = false,
         dragoffset = {
             x: 0,
@@ -31,6 +34,7 @@ var Draggable = function (id) {
     this.events = function () {
         var self = this;
         _on(document.getElementsByClassName('modal-header')[0], 'mousedown', function (e) {
+            console.log("started dragging");
             isDragReady = true;
             e.preventDefault();
             var modalMousedown = document.querySelectorAll(".modal-wrapper")
@@ -41,17 +45,12 @@ var Draggable = function (id) {
             //corssbrowser mouse pointer values
             e.pageX = e.pageX || e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
             e.pageY = e.pageY || e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
-            dragoffset.x = e.pageX - el.offsetLeft;
-            dragoffset.y = e.pageY - el.offsetTop;
+            dragoffset.x = e.pageX - element.offsetLeft;
+            dragoffset.y = e.pageY - element.offsetTop;
         });
         _on(document.getElementsByClassName('modal-header')[0], 'mouseup', function () {
+            console.log("stopped dragging");
             isDragReady = false;
-            var modalMouseup = document.querySelectorAll(".modal-wrapper")
-            if(modalMouseup.length <= 1) {
-                for (var count = 0; count < modalMouseup.length; count++) {
-                  modalMouseup[count].style.zIndex = 1;
-                }
-            }
         });
         _on(document, 'mousemove', function (e) {
             if (isDragReady) {
@@ -60,8 +59,8 @@ var Draggable = function (id) {
                 // left/right constraint
                 if (e.pageX - dragoffset.x < 0) {
                     offsetX = 0;
-                } else if (e.pageX - dragoffset.x + el.offsetWidth > document.body.clientWidth) {
-                    offsetX = document.body.clientWidth - el.offsetWidth;
+                } else if (e.pageX - dragoffset.x + element.offsetWidth > document.body.clientWidth) {
+                    offsetX = document.body.clientWidth - element.offsetWidth;
                 } else {
                     offsetX = e.pageX - dragoffset.x;
                 }
@@ -69,98 +68,162 @@ var Draggable = function (id) {
                 // top/bottom constraint
                 if (e.pageY - dragoffset.y < 40) {
                     offsetY = 40;
-                } else if (e.pageY - dragoffset.y + el.offsetHeight > document.body.clientHeight) {
-                    offsetY = document.body.clientHeight - el.offsetHeight;
+                } else if (e.pageY - dragoffset.y + element.offsetHeight > document.body.clientHeight) {
+                    offsetY = document.body.clientHeight - element.offsetHeight;
                 } else {
                     offsetY = e.pageY - dragoffset.y;
                 }
 
-                el.style.top = offsetY + "px";
-                el.style.left = offsetX + "px";
+                element.style.top = offsetY + "px";
+                element.style.left = offsetX + "px";
             }
         });
     };
     //cross browser event Helper function
-    var _on = function (el, event, fn) {
-        document.attachEvent ? el.attachEvent('on' + event, fn) : el.addEventListener(event, fn, !0);
+    var _on = function (element, event, functionality) {
+        document.attachEvent ? element.attachEvent('on' + event, functionality) : element.addEventListener(event, functionality, !0);
     };
     this.init();
 }
 
-//new Draggable('#icon-about .modal-wrapper');
-
 //display date and time
 function funStartTime() {
-  var ldNow = new Date();
-  var larrWeekday = new Array(7);
-  larrWeekday[0] = "Sun";
-  larrWeekday[1] = "Mon";
-  larrWeekday[2] = "Tue";
-  larrWeekday[3] = "Wed";
-  larrWeekday[4] = "Thu";
-  larrWeekday[5] = "Fri";
-  larrWeekday[6] = "Sat";
-  var lsDay = larrWeekday[ldNow.getDay()];
+  var now = new Date();
+  var weekdayArray = new Array(7);
+  weekdayArray[0] = "Sun";
+  weekdayArray[1] = "Mon";
+  weekdayArray[2] = "Tue";
+  weekdayArray[3] = "Wed";
+  weekdayArray[4] = "Thu";
+  weekdayArray[5] = "Fri";
+  weekdayArray[6] = "Sat";
+  var day = weekdayArray[now.getDay()];
 
-  var liDayDate = ldNow.getDate();
+  var dayDate = now.getDate();
 
-  var larrMonth = new Array();
-  larrMonth[0] = "Jan";
-  larrMonth[1] = "Feb";
-  larrMonth[2] = "Mar";
-  larrMonth[3] = "Apr";
-  larrMonth[4] = "May";
-  larrMonth[5] = "Jun";
-  larrMonth[6] = "Jul";
-  larrMonth[7] = "Aug";
-  larrMonth[8] = "Sep";
-  larrMonth[9] = "Oct";
-  larrMonth[10] = "Nov";
-  larrMonth[11] = "Dec";
-  var lsMonthName = larrMonth[ldNow.getMonth()];
+  var monthArray = new Array();
+  monthArray[0] = "Jan";
+  monthArray[1] = "Feb";
+  monthArray[2] = "Mar";
+  monthArray[3] = "Apr";
+  monthArray[4] = "May";
+  monthArray[5] = "Jun";
+  monthArray[6] = "Jul";
+  monthArray[7] = "Aug";
+  monthArray[8] = "Sep";
+  monthArray[9] = "Oct";
+  monthArray[10] = "Nov";
+  monthArray[11] = "Dec";
+  var month = monthArray[now.getMonth()];
 
-  var liYear = ldNow.getFullYear();
+  var year = now.getFullYear();
 
-  var liHour = ldNow.getHours();
-  var liMin = ldNow.getMinutes();
-  liMin = funCheckTime(liMin);
-  document.getElementById("time-date").innerHTML = lsDay + " " + liDayDate + " " + lsMonthName + " " + liYear + " " + liHour + ":" + liMin;
-  var t = setTimeout(funStartTime, 500);
+  var hour = now.getHours();
+  var minute = now.getMinutes();
+  minute = funCheckTime(minute);
+  document.getElementById("time-date").innerHTML = day + " " + dayDate + " " + month + " " + year + " " + hour + ":" + minute;
+  var timeout = setTimeout(funStartTime, 500);
 }
 
-function funCheckTime(pNo) {
-  if (pNo < 10) {pNo = "0" + pNo};  // add zero in front of numbers < 10
-  return pNo;
+function funCheckTime(number) {
+  if (number < 10) {number = "0" + number};  // add zero in front of numbers < 10
+  return number;
 }
 
 function funOpenFullscreen() {
-  var elem = document.body;
-  if (elem.requestFullscreen) {
-    var lobjFullscreen = elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) { /* Firefox */
-    var lobjFullscreen = elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-    var lobjFullscreen = elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    var lobjFullscreen = elem.msRequestFullscreen();
+  const element = document.body;
+  var fullscreen;
+  if (element.requestFullscreen) {
+    fullscreen = element.requestFullscreen();
+  } else if (element.mozRequestFullScreen) { /* Firefox */
+    fullscreen = element.mozRequestFullScreen();
+  } else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    fullscreen = element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) { /* IE/Edge */
+    fullscreen = element.msRequestFullscreen();
   }
   document.getElementById("icon-expand").getElementsByTagName("i")[0].className = "fas fa-compress-arrows-alt";
-  return lobjFullscreen;
+  return fullscreen;
 }
 
 /* Close fullscreen */
 function funCloseFullscreen() {
+  var close;
   if (document.exitFullscreen) {
-    var lobjClose = document.exitFullscreen();
+    close = document.exitFullscreen();
   } else if (document.mozCancelFullScreen) { /* Firefox */
-    var lobjClose = document.mozCancelFullScreen();
+    close = document.mozCancelFullScreen();
   } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-    var lobjClose = document.webkitExitFullscreen();
+    close = document.webkitExitFullscreen();
   } else if (document.msExitFullscreen) { /* IE/Edge */
-    var lobjClose = document.msExitFullscreen();
+    close = document.msExitFullscreen();
   }
   document.getElementById("icon-expand").getElementsByTagName("i")[0].className = "fas fa-expand-arrows-alt";
 
-  return lobjClose;
+  return close;
 
+}
+
+
+//Make the window module resizable
+function makeResizableDiv(div) {
+  const header = document.querySelector(div + ' .modal-header');
+  const element = document.querySelector(div + ' .modal-container');
+  const elementBody = element.querySelector('.modal-body')
+  const resizers = document.querySelectorAll(div + ' .resizer')
+  const minimumSize = 20;
+  let originalWidth = 0;
+  let originalHeight = 0;
+  let originalX = 0;
+  let originalY = 0;
+  let originalMouseX = 0;
+  let originalMouseY = 0;
+  for (let i = 0;i < resizers.length; i++) {
+    const currentResizer = resizers[i];
+    currentResizer.addEventListener('mousedown', function(e) {
+      e.preventDefault()
+      originalWidth = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+      originalHeight = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+      originalX = element.getBoundingClientRect().left;
+      originalY = element.getBoundingClientRect().top;
+      originalMouseX = e.pageX;
+      originalMouseY = e.pageY;
+      element.classList.add("resizing");
+      window.addEventListener('mousemove', resize)
+      window.addEventListener('mouseup', stopResize)
+    })
+
+    function resize(e) {
+      if (currentResizer.classList.contains('bottom-right')) {
+        const width = originalWidth + (e.pageX - originalMouseX);
+        const height = originalHeight + (e.pageY - originalMouseY)
+        if (width > minimumSize) {
+          element.style.width = width + 'px'
+
+        }
+        if (height > minimumSize) {
+          element.style.height =  height + 'px'
+          elementBody.style.height = (element.offsetHeight - header.offsetHeight) + 'px'
+        }
+      }
+    }
+
+    function stopResize() {
+      window.removeEventListener('mousemove', resize)
+      element.classList.remove("resizing");
+    }
+  }
+}
+
+function expandShrinkWindow(div){
+
+    const element = document.querySelector(div + ' .modal-wrapper');
+
+    if(element.classList.contains("fullscreenWindow")) {
+        element.querySelector(".modal-container").style.height = ""
+        element.classList.remove("fullscreenWindow")
+    } else {
+        element.querySelector(".modal-container").style.height = (document.body.offsetHeight - 40) + "px"
+        element.classList.add("fullscreenWindow")
+    }
 }

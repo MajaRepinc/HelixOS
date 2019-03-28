@@ -1,15 +1,14 @@
 // register modal component
-var clickedElement;
-document.getElementById("left-top").addEventListener('click', function (event) {
-  // Log the clicked element in the console
-  clickedElement = "#" + event.target.parentNode.id;
-}, false);
-
-Vue.component('modal', {
-  template: '#window-modal-template',
+Vue.component("modal", {
+  template: "#window-modal-template",
+  props: ['el'],
   methods: {
-      draggable: function () {
-          new Draggable(clickedElement + ' .modal-wrapper');
+      draggableResizable: function () {
+          funDraggable("#" + this.$el.parentNode.id + " .modal-wrapper");
+          makeResizableDiv("#" + this.$el.parentNode.id);
+      },
+      expandShrink: function () {
+          expandShrinkWindow("#" + this.$el.parentNode.id);
       }
   }
 
@@ -17,16 +16,18 @@ Vue.component('modal', {
 
 // start app
 var about = new Vue({
-  el: '#icon-about',
+  el: "#icon-about",
   data: {
-    showModal: false
+    showModal: false,
+    expand: false
   }
 })
 
 // start app
 var settings = new Vue({
-  el: '#icon-settings',
+  el: "#icon-settings",
   data: {
-    showModal: false
+    showModal: false,
+    expand: false
   }
 })
