@@ -7,6 +7,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
   };
 });
 
+document.addEventListener('keyup', function (event) {
+    if (event.defaultPrevented) {
+        return;
+    }
+    var key = event.key || event.keyCode;
+
+    if (key === 'F11') { funKeyFullscreen() }
+});
+
+function funKeyFullscreen() {
+    console.log("clicked f11");
+    const fullScreenIcon =  document.getElementById("icon-expand").getElementsByTagName("i")[0].className;
+
+      if (fullScreenIcon === "fas fa-expand-arrows-alt") {
+          document.getElementById("icon-expand").getElementsByTagName("i")[0].className = "fas fa-compress-arrows-alt";
+          console.log("opened fullscreen");
+      } else {
+          document.getElementById("icon-expand").getElementsByTagName("i")[0].className = "fas fa-expand-arrows-alt";
+          console.log("closed fullscreen");
+      }
+}
+
 function funFullscreen() {
     const isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
       (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
@@ -14,9 +36,11 @@ function funFullscreen() {
       (document.msFullscreenElement && document.msFullscreenElement !== null);
      if (!isInFullScreen) {
          funOpenFullscreen();
+         document.getElementById("icon-expand").getElementsByTagName("i")[0].className = "fas fa-compress-arrows-alt";
          console.log("opened fullscreen");
      } else {
          funCloseFullscreen();
+         document.getElementById("icon-expand").getElementsByTagName("i")[0].className = "fas fa-expand-arrows-alt";
          console.log("closed fullscreen");
      }
 }
@@ -142,7 +166,7 @@ function funOpenFullscreen() {
   } else if (element.msRequestFullscreen) { /* IE/Edge */
     fullscreen = element.msRequestFullscreen();
   }
-  document.getElementById("icon-expand").getElementsByTagName("i")[0].className = "fas fa-compress-arrows-alt";
+
   return fullscreen;
 }
 
@@ -158,7 +182,7 @@ function funCloseFullscreen() {
   } else if (document.msExitFullscreen) { /* IE/Edge */
     close = document.msExitFullscreen();
   }
-  document.getElementById("icon-expand").getElementsByTagName("i")[0].className = "fas fa-expand-arrows-alt";
+
 
   return close;
 
@@ -221,9 +245,13 @@ function expandShrinkWindow(div){
 
     if(element.classList.contains("fullscreenWindow")) {
         element.querySelector(".modal-container").style.height = ""
-        element.classList.remove("fullscreenWindow")
+        element.classList.remove("fullscreenWindow");
+        element.querySelector(".window-expand-shrink div").classList.remove("fa-compress");
+        element.querySelector(".window-expand-shrink div").classList.add("fa-expand");
     } else {
         element.querySelector(".modal-container").style.height = (document.body.offsetHeight - 40) + "px"
         element.classList.add("fullscreenWindow")
+        element.querySelector(".window-expand-shrink div").classList.remove("fa-expand");
+        element.querySelector(".window-expand-shrink div").classList.add("fa-compress");
     }
 }
