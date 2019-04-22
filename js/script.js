@@ -1,20 +1,21 @@
 //call functions when page fully loads
 document.addEventListener("DOMContentLoaded", function(event) {
-  funStartTime();
-  document.getElementById("icon-expand").onclick = function() {
+    funStartTime();
+
+    document.getElementById("icon-expand").onclick = function() {
       funFullscreen();
+    };
 
-  };
+    document.addEventListener('keyup', function (event) {
+      if (event.defaultPrevented) { return; }
+      var key = event.key || event.keyCode;
+
+      if (key === 'F11') { funKeyFullscreen() }
+    });
+
 });
 
-document.addEventListener('keyup', function (event) {
-    if (event.defaultPrevented) {
-        return;
-    }
-    var key = event.key || event.keyCode;
 
-    if (key === 'F11') { funKeyFullscreen() }
-});
 
 function funKeyFullscreen() {
     console.log("clicked f11");
@@ -46,26 +47,21 @@ function funFullscreen() {
 }
 
 function funDraggable(id) {
-    var element = document.querySelector(id),
+    var element = document.querySelector(id  + " .modal-wrapper"),
         isDragReady = false,
         dragoffset = {
             x: 0,
             y: 0
         };
     this.init = function () { this.events(); };
-
     //events for the element
     this.events = function () {
         var self = this;
         _on(document.getElementsByClassName('modal-header')[0], 'mousedown', function (e) {
-            console.log("started dragging");
+            //console.log("started dragging");
             isDragReady = true;
             e.preventDefault();
             var modalMousedown = document.querySelectorAll(".modal-wrapper")
-            for (var count = 0; count < modalMousedown.length; count++) {
-              modalMousedown[count].style.zIndex = 1;
-            }
-            e.target.closest(".modal-wrapper").style.zIndex = 100;
             //corssbrowser mouse pointer values
             e.pageX = e.pageX || e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
             e.pageY = e.pageY || e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
@@ -73,10 +69,11 @@ function funDraggable(id) {
             dragoffset.y = e.pageY - element.offsetTop;
         });
         _on(document.getElementsByClassName('modal-header')[0], 'mouseup', function () {
-            console.log("stopped dragging");
+            //console.log("stopped dragging");
             isDragReady = false;
         });
         _on(document, 'mousemove', function (e) {
+
             if (isDragReady) {
                 e.pageX = e.pageX || e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
                 e.pageY = e.pageY || e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);

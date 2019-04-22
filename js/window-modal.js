@@ -2,7 +2,7 @@
 var windowModalComponent = Vue.component("modal", {
   template:`
   <transition name="modal" @after-enter="draggableResizable();">
-      <div class="modal-wrapper">
+      <div class="modal-wrapper"  @mousedown="putFocusOnCurrent()">
           <div class="modal-container">
               <div class='resizers'>
                   <div class="modal-header">
@@ -36,11 +36,18 @@ var windowModalComponent = Vue.component("modal", {
   `,
   methods: {
       draggableResizable: function () {
-          funDraggable("#" + this.$el.parentNode.id + " .modal-wrapper");
+          funDraggable("#" + this.$el.parentNode.id);
           makeResizableDiv("#" + this.$el.parentNode.id);
       },
       expandShrink: function () {
           expandShrinkWindow("#" + this.$el.parentNode.id);
+      },
+      putFocusOnCurrent: function () {
+          var allOpenWindows = document.querySelectorAll(".modal-wrapper")
+          for (var count = 0; count < allOpenWindows.length; count++) {
+              allOpenWindows[count].style.zIndex = 1;
+          }
+          document.querySelector("#" + this.$el.parentNode.id + " .modal-wrapper").style.zIndex = 100
       }
   }
 
@@ -50,10 +57,15 @@ var windowModalComponent = Vue.component("modal", {
 // start about app
 var aboutAppButton = new Vue({
     el: "#icon-about",
+    data: {
+        name: "about",
+        css: "fas fa-info-circle"
+    },
     methods: {
       showAboutWindow: function() {
           console.log("clicked " + aboutAppWindow.name);
           aboutAppWindow.showModal = true;
+          //middleBarComponent.addIcon(this.name, this.css);
       }
     }
 });
@@ -63,16 +75,26 @@ var aboutAppWindow = new Vue ({
     data: {
 		name: "About Window",
         showModal: false
-	}
+	},
+    methods: {
+        removeIcon: function() {
+            console.log("clicked")
+        }
+    }
 });
 
 // start settings app
 var settingsAppButton = new Vue({
   el: "#icon-settings",
+  data: {
+      name: "settings",
+      css: "fas fa-cog"
+  },
   methods: {
     showAboutWindow: function() {
         console.log("clicked " + settingsAppWindow.name)
         settingsAppWindow.showModal = true;
+        //middleBarComponent.addIcon(this.name, this.css);
     }
   }
 });
