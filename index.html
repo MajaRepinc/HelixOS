@@ -34,7 +34,11 @@
 
             </div>
 
-            <div id="middle-top" class="top-bar-component"></div>
+            <div id="middle-top" class="top-bar-component">
+                <bar-component is="bar-component" v-for="(icon, index) in icons" v-bind:key="icon.name" v-bind:index="icon.index" v-bind:css="icon.css" v-bind:elementid="icon.elementid" v-on:remove="removeIcon(index)"></bar-component>
+
+                <div style="padding:10px 0px; clear:both;"></div>
+            </div>
 
             <div id="right-top" class="top-bar-component" title="Date/Time">
 
@@ -49,6 +53,7 @@
         </div>
 
         <div id="workspace">
+
             <!-- about-modal-component -->
             <div id="about-modal">
                 <modal v-if="showModal" @close="showModal = false">
@@ -74,18 +79,21 @@
                         <div class="fas fa-cog modal-icon" style="display:inline-block;"></div><h3>Settings</h3>
                     </div>
                     <div slot="body">
+                        <h3>Themes</h3>
                         <h3>Background</h3>
                         <h3>Colours</h3>
-                        <h3>Font</h3>
+                        <h3>Fonts</h3>
                     </div>
                 </modal>
             </div>
+
         </div>
     </div>
 
     <!-- load script -->
     <script src="js/script.js"></script>
     <script src="js/window-modal.js"></script>
+    <script src="js/top-bar-components.js"></script>
 
 </body>
 </html>
