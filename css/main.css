@@ -53,7 +53,7 @@ body {
     height: 100%;
 }
 .left-top-component i {
-    padding: 11px;
+    padding: 12px;
 }
 .left-top-component:hover {
     background-color: #9ad3de;
@@ -106,8 +106,8 @@ body {
     font-size: 1.1em;
     float: left;
 }
-.right-top-component i, #time-date {
-    padding: 11px;
+.right-top-component i {
+    padding: 12px;
 }
 .right-top-component:hover {
     background-color: #9ad3de;
@@ -115,6 +115,7 @@ body {
 #time-date {
     width: 85%;
     cursor: default;
+    padding: 11px;
 }
 #icon-expand {
     width: 15%;
@@ -127,6 +128,10 @@ body {
   flex:1;
   width: 100%;
   background-color: #e3e3e3;
+  background-image: url("../assets/img/helixos-background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 /***********************************
@@ -147,7 +152,7 @@ body {
     position: fixed;
 }
 .modal-container {
-  min-width: 300px;
+  min-width: 400px;
   max-width: 600px;
   min-height: 100px;
   margin: 0px auto;
@@ -185,10 +190,10 @@ body {
     border-top-right-radius: 2px;
     cursor: default;
     box-sizing: border-box;
+    color: #fff;
 }
 .modal-header h3, .modal-header .modal-icon {
   margin: 0;
-  color: #fff;
   padding: 10px;
   display: inline-block;
 }
@@ -196,7 +201,7 @@ body {
   padding-left: 5px;
 }
 .modal-body {
-  padding: 10px;
+  padding: 15px;
   height: 100%;
   overflow: auto;
   box-sizing: border-box;
@@ -226,7 +231,13 @@ body {
     display: inline-block;
     float: right;
     padding: 10px 5px;
-    color:#eee;
+
+}
+.window-buttons .fas {
+    opacity: 0.6;
+}
+.window-buttons .fas:hover {
+    opacity: 1;
 }
 .window-buttons div {
     display: inline-block;
@@ -246,6 +257,268 @@ body {
 .window-minimize div:hover{
     color:#FF7F00;
 }
+.colour-palette-label {
+    display: inline-block;
+    width: 49%;
+    font-weight: bold;
+}
+
+.colour-palette-picker {
+    display: inline-block;
+    width: 35%;
+}
+.colour-palette-section {
+    margin-bottom: 10px;
+}
+.modal-body h3 {
+    border-bottom: 1px solid #cccccc;
+    padding: 5px;
+}
+
+.settings-section > div, .modal-body p {
+    margin-left: 20px;
+}
+.settings-section:not(:first-child) {
+    margin-top: 30px;
+}
+.colour-palette-picker input {
+    background: #fff;
+    border-radius: 3px;
+}
+.colour-palette-picker input:hover {
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .33);
+}
+
+/***********************************
+*             Dropdown             *
+************************************/
+.brd {
+    border: 1px solid #e2eded;
+}
+#toggle-background,  #toggle-font{
+    position: relative;
+    width: 300px;
+    height: 42px;
+    border-radius: 4px;
+}
+#toggle-background:hover, #toggle-font:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .33);
+}
+
+.background-select-button {
+    position: relative;
+    height: 16px;
+    padding: 12px 14px;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.options-view-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+
+#background-selected-value, #font-selected-value  {
+    font-size: 16px;
+    line-height: 1;
+    margin-right: 26px;
+}
+
+.option i {
+    width: 16px;
+    height: 16px;
+}
+
+.option, .label {
+    color: #2d3667;
+    font-size: 16px;
+}
+
+.chevrons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 12px;
+    padding: 9px 14px;
+}
+
+.chevrons i {
+    display: block;
+    height: 50%;
+    color: #d1dede;
+    font-size: 12px;
+    text-align: right;
+}
+.options-view-button:checked + .background-select-button .chevrons i {
+    color: #2d3667;
+}
+
+.options {
+    position: absolute;
+    left: 0;
+    width: 250px;
+}
+
+.options {
+    position: relative;
+    width: 298px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.options-view-button:checked ~ .options {
+    border: 1px solid #e2eded;
+    border-color: #eaf1f1 #e4eded #dbe7e7 #e4eded;
+}
+
+.option {
+    position: relative;
+    line-height: 1;
+    transition: 0.3s ease all;
+    z-index: 2;
+}
+
+.option i {
+    position: absolute;
+    left: 14px;
+    padding: 0;
+    display: none;
+}
+
+.options-view-button:checked ~ .options .option i {
+    display: block;
+    padding: 12px 0;
+}
+
+.label {
+    display: none;
+    padding: 0;
+    margin-left: 27px;
+}
+
+.options-view-button:checked ~ .options .label {
+    display: block;
+    padding: 12px 14px;
+}
+
+.s-c {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50%;
+}
+
+.s-c.top {
+    top: 0;
+}
+
+.s-c.bottom {
+    bottom: 0;
+}
+
+input[type="radio"] {
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.s-c:hover ~ i {
+    color: #fff;
+    opacity: 0;
+}
+
+.s-c:hover {
+    height: 100%;
+    z-index: 1;
+}
+
+.s-c.bottom:hover + i {
+    bottom: -25px;
+    animation: moveup 0.3s ease 0.1s forwards;
+}
+
+.s-c.top:hover ~ i {
+    top: -25px;
+    animation: movedown 0.3s ease 0.1s forwards;
+}
+
+@keyframes moveup {
+    0%{ bottom: -25px; opacity: 0;}
+    100%{ bottom: 0; opacity: 1;}
+}
+
+@keyframes movedown {
+    0%{ top: -25px; opacity: 0;}
+    100%{ top: 0; opacity: 1;}
+}
+
+.label {
+    transition: 0.3s ease all;
+}
+
+.option input[type="radio"]:checked ~ i {
+    top: 0;
+    bottom: auto;
+    opacity: 1;
+    animation: unset;
+}
+
+.option input[type="radio"]:checked ~ i, .option input[type="radio"]:checked ~ .label {
+    color:#fff;
+}
+
+.option input[type="radio"]:checked ~ .label:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background-color: #89bdd3;
+}
+
+
+.option:first-child input[type="radio"]:checked ~ .label:before {
+    border-radius: 4px 4px 0 0;
+}
+.option:last-child input[type="radio"]:checked ~ .label:before {
+    border-radius: 0 0 4px 4px;
+}
+.option:hover .label {
+    color: #fff;
+}
+
+ .option:first-child:hover {
+    border-radius: 4px 4px 0 0;
+}
+
+.option:hover  {
+    background-color: #9ad3de;
+}
+
+ .option:last-child:hover {
+    border-radius: 0 0 4px 4px;
+}
+
 /***********************************
 *          Media Queries           *
 ************************************/
