@@ -35,7 +35,7 @@
             </div>
 
             <div id="middle-top" class="top-bar-component">
-                <bar-component is="bar-component" v-for="(icon, index) in icons" v-bind:key="icon.name" v-bind:index="icon.index" v-bind:css="icon.css" v-bind:elementid="icon.elementid" v-on:remove="removeIcon(index)"></bar-component>
+                <bar-component is="bar-component" v-for="(icon, index) in icons" v-bind:key="icon.name" v-bind:index="icon.index" v-bind:css="icon.css" v-bind:elementid="icon.elementid" v-on:remove="removeIcon()"></bar-component>
 
                 <div style="padding:10px 0px; clear:both;"></div>
             </div>
@@ -56,7 +56,7 @@
 
             <!-- about-modal-component -->
             <div id="about-modal">
-                <modal v-if="showModal" @close="showModal = false">
+                <modal v-if="showModal" v-on:close="showModal = false;">
                   <div slot="header">
                       <div class="fas fa-info-circle modal-icon" style="display:inline-block;"></div><h3>About</h3>
                   </div>
@@ -74,15 +74,137 @@
 
             <!-- settings-modal-component -->
             <div id="settings-modal">
-                <modal v-if="showModal" @close="showModal = false">
+                <modal v-if="showModal" v-on:close="showModal = false">
                     <div slot="header">
                         <div class="fas fa-cog modal-icon" style="display:inline-block;"></div><h3>Settings</h3>
                     </div>
                     <div slot="body">
-                        <h3>Themes</h3>
-                        <h3>Background</h3>
-                        <h3>Colours</h3>
-                        <h3>Fonts</h3>
+
+                        <div id="settings-themes" class="settings-section">
+                            <h3>Themes</h3>
+                        </div>
+
+                        <div id="settings-background" class="settings-section">
+                            <h3>Background</h3>
+                            <div class="select-dropdown">
+                                <form id="toggle-background" @change="toggleBackgroundStyle()">
+                                    <div class="select-box">
+                                        <input type="checkbox" class="options-view-button">
+                                        <div class="background-select-button brd">
+                                            <div id="background-selected-value">
+                                                <span>Select an option</span>
+                                            </div>
+                                            <div class="chevrons">
+                                                <i class="fas fa-chevron-up"></i>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="options">
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="background" value="picture">
+                                                <input class="s-c bottom" type="radio" name="background" value="picture">
+                                                <i class="fas fa-image"></i>
+                                                <span class="label">Picture</span>
+                                            </div>
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="background" value="solid">
+                                                <input class="s-c bottom" type="radio" name="background" value="solid">
+                                                <i class="fas fa-fill"></i>
+                                                <span class="label">Solid Colour</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div v-if="showPictures">select picture</div>
+                            <div v-else-if="showColours">select colour</div>
+                        </div>
+
+                        <div id="settings-fonts" class="settings-section">
+                            <h3>Fonts</h3>
+                            <div class="select-dropdown">
+                                <form id="toggle-font" @change="toggleFont()">
+                                    <div class="select-box">
+                                        <input type="checkbox" class="options-view-button">
+                                        <div class="background-select-button brd">
+                                            <div id="font-selected-value">
+                                                <span>Select a font</span>
+                                            </div>
+                                            <div class="chevrons">
+                                                <i class="fas fa-chevron-up"></i>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="options">
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="background" value="Arial">
+                                                <input class="s-c bottom" type="radio" name="background" value="Arial">
+                                                <i class="fas fa-i-cursor"></i>
+                                                <span class="label">Arial</span>
+                                            </div>
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="background" value="Courier New">
+                                                <input class="s-c bottom" type="radio" name="background" value="Courier New">
+                                                <i class="fas fa-i-cursor"></i>
+                                                <span class="label">Courier New</span>
+                                            </div>
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="background" value="Georgia">
+                                                <input class="s-c bottom" type="radio" name="background" value="Georgia">
+                                                <i class="fas fa-i-cursor"></i>
+                                                <span class="label">Georgia</span>
+                                            </div>
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="background" value="Helvetica">
+                                                <input class="s-c bottom" type="radio" name="background" value="Helvetica">
+                                                <i class="fas fa-i-cursor"></i>
+                                                <span class="label">Helvetica</span>
+                                            </div>
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="background" value="Times New Roman">
+                                                <input class="s-c bottom" type="radio" name="background" value="Times New Roman">
+                                                <i class="fas fa-i-cursor"></i>
+                                                <span class="label">Times New Roman</span>
+                                            </div>
+                                            <div class="option">
+                                                <input class="s-c top" type="radio" name="background" value="Verdana">
+                                                <input class="s-c bottom" type="radio" name="background" value="Verdana">
+                                                <i class="fas fa-i-cursor"></i>
+                                                <span class="label">Verdana</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="settings-colour-palette" class="settings-section">
+                            <h3>Colour Palette</h3>
+                            <div id="colour-topbar" class="colour-palette-section">
+                                <div class="colour-palette-label">Top bar</div>
+                                <div class="colour-palette-picker">
+                                    <input type="color" name="topbar-color" @change="changeColourTopBar()">
+                                </div>
+                            </div>
+                            <div id="colour-topbar-font" class="colour-palette-section">
+                                <div class="colour-palette-label">Top bar font</div>
+                                <div class="colour-palette-picker">
+                                    <input type="color" name="topbar-font-color" @change="changeColourTopBarFont()">
+                                </div>
+                            </div>
+                            <div id="colour-innerwindow" class="colour-palette-section">
+                                <div class="colour-palette-label">Inner window</div>
+                                <div class="colour-palette-picker">
+                                    <input type="color" name="innerwindow-color"  @change="changeColourInnerWindow">
+                                </div>
+                            </div>
+                            <div id="colour-innerwindow-font" class="colour-palette-section">
+                                <div class="colour-palette-label">Inner window font</div>
+                                <div class="colour-palette-picker">
+                                    <input type="color" name="innerwindow-font-color" @change="changeColourInnerWindowFont">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </modal>
             </div>
