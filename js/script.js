@@ -252,3 +252,36 @@ function expandShrinkWindow(div){
         element.querySelector(".window-expand-shrink div").classList.add("fa-compress");
     }
 }
+
+
+
+
+function checkColourSettings() {
+    if(settingsAppWindow.topBarCol !== "") {
+        var allHeaders = document.getElementsByClassName("modal-header");
+        for(var i = 0; i < allHeaders.length; i++) {
+            allHeaders[i].style.backgroundColor = settingsAppWindow.topBarCol;
+        }
+    }
+
+    if(settingsAppWindow.topBarFontCol !== "") {
+        var allHeadersFont = document.getElementsByClassName("modal-header");
+        for(var i = 0; i < allHeadersFont.length; i++) {
+            allHeadersFont[i].style.color = settingsAppWindow.topBarFontCol;
+        }
+    }
+
+    if(settingsAppWindow.innerWindowCol !== "") {
+        var allInnerWindows = document.getElementsByClassName("modal-container");
+        for(var i = 0; i < allInnerWindows.length; i++) {
+            allInnerWindows[i].style.backgroundColor = settingsAppWindow.innerWindowCol;
+        }
+    }
+    if(settingsAppWindow.innerWindowFontCol !== "") {
+        var allInnerWindowsFont = document.getElementsByClassName("modal-container");
+        for(var i = 0; i < allInnerWindowsFont.length; i++) {
+            allInnerWindowsFont[i].style.color = settingsAppWindow.innerWindowFontCol;
+        }
+    }
+
+}
