@@ -128,7 +128,7 @@ body {
   flex:1;
   width: 100%;
   background-color: #e3e3e3;
-  background-image: url("../assets/img/helixos-background.png");
+  background: url("../assets/img/helixos-background.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -153,8 +153,9 @@ body {
 }
 .modal-container {
   min-width: 400px;
-  max-width: 600px;
-  min-height: 100px;
+  min-height: 200px;
+  width: 500px;
+  height: 450px;
   margin: 0px auto;
   background-color: #fff;
   border-radius: 2px;
@@ -274,43 +275,85 @@ body {
     border-bottom: 1px solid #cccccc;
     padding: 5px;
 }
-
+.modal-body h3 i {
+    cursor: default;
+}
 .settings-section > div, .modal-body p {
     margin-left: 20px;
 }
 .settings-section:not(:first-child) {
-    margin-top: 30px;
+    margin-top: 50px;
 }
-.colour-palette-picker input {
+#selected-background {
+    width: 100px;
+    height: 70px;
+    display: inline-block;
+    background: url("../assets/img/helixos-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+    vertical-align: middle;
+}
+.colour-palette-picker input, .colour-search-picker input {
     background: #fff;
-    border-radius: 3px;
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: #ccc;
+    padding: 3px;
 }
-.colour-palette-picker input:hover {
+.colour-palette-picker input:hover,  .colour-search-picker input:hover{
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0, 0, 0, .33);
 }
+.colour-search-label {
+    width: 55%;
+    display: inline-block;
+}
+.colour-search-picker {
+    width: 35%;
+    display: inline-block;
+}
+.background-change {
+    margin-top: 15px;
+    font-size: 16px;
+}
+#change-picture {
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    width: 210px;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 4px 5px ;
+}
 
+#submit-picture {
+
+}
 /***********************************
 *             Dropdown             *
 ************************************/
 .brd {
-    border: 1px solid #e2eded;
+    border: 1px solid #cccccc;
 }
-#toggle-background,  #toggle-font{
+.settings-dropdown {
     position: relative;
     width: 300px;
     height: 42px;
     border-radius: 4px;
 }
-#toggle-background:hover, #toggle-font:hover {
+.settings-dropdown:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, .33);
 }
 
-.background-select-button {
+.select-button {
     position: relative;
     height: 16px;
     padding: 12px 14px;
-    background-color: #fff;
+
     border-radius: 4px;
     cursor: pointer;
 }
@@ -329,7 +372,7 @@ body {
     z-index: 3;
 }
 
-#background-selected-value, #font-selected-value  {
+#background-selected-value, #font-selected-value, #theme-selected-value  {
     font-size: 16px;
     line-height: 1;
     margin-right: 26px;
@@ -341,7 +384,6 @@ body {
 }
 
 .option, .label {
-    color: #2d3667;
     font-size: 16px;
 }
 
@@ -357,12 +399,12 @@ body {
 .chevrons i {
     display: block;
     height: 50%;
-    color: #d1dede;
+    opacity: 0.3;
     font-size: 12px;
     text-align: right;
 }
-.options-view-button:checked + .background-select-button .chevrons i {
-    color: #2d3667;
+.options-view-button:checked + .select-button .chevrons i {
+    opacity: 1;
 }
 
 .options {
@@ -377,11 +419,11 @@ body {
     margin: 0 auto;
     background-color: #fff;
     border-radius: 4px;
+    z-index: 5;
 }
 
 .options-view-button:checked ~ .options {
-    border: 1px solid #e2eded;
-    border-color: #eaf1f1 #e4eded #dbe7e7 #e4eded;
+    border: 1px solid #cccccc;
 }
 
 .option {
@@ -421,20 +463,12 @@ body {
     height: 50%;
 }
 
-.s-c.top {
-    top: 0;
-}
-
-.s-c.bottom {
-    bottom: 0;
-}
-
 input[type="radio"] {
     position: absolute;
     right: 0;
     left: 0;
     width: 100%;
-    height: 50%;
+    height: 100%;
     margin: 0;
     opacity: 0;
     cursor: pointer;
@@ -455,19 +489,9 @@ input[type="radio"] {
     animation: moveup 0.3s ease 0.1s forwards;
 }
 
-.s-c.top:hover ~ i {
-    top: -25px;
-    animation: movedown 0.3s ease 0.1s forwards;
-}
-
 @keyframes moveup {
     0%{ bottom: -25px; opacity: 0;}
     100%{ bottom: 0; opacity: 1;}
-}
-
-@keyframes movedown {
-    0%{ top: -25px; opacity: 0;}
-    100%{ top: 0; opacity: 1;}
 }
 
 .label {
@@ -496,7 +520,6 @@ input[type="radio"] {
     background-color: #89bdd3;
 }
 
-
 .option:first-child input[type="radio"]:checked ~ .label:before {
     border-radius: 4px 4px 0 0;
 }
@@ -517,6 +540,15 @@ input[type="radio"] {
 
  .option:last-child:hover {
     border-radius: 0 0 4px 4px;
+}
+
+.current-selection {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.current-selection span {
+    font-weight: bold;
 }
 
 /***********************************

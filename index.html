@@ -81,18 +81,15 @@
                     <div slot="body">
 
                         <div id="settings-themes" class="settings-section">
-                            <h3>Themes</h3>
-                        </div>
-
-                        <div id="settings-background" class="settings-section">
-                            <h3>Background</h3>
+                            <h3 style="margin-top:0;"><i class="fas fa-swatchbook"></i> Themes</h3>
+                            <div class="current-selection">Current theme: <span id="selected-theme"></span></div>
                             <div class="select-dropdown">
-                                <form id="toggle-background" @change="toggleBackgroundStyle()">
+                                <form id="toggle-theme" class="settings-dropdown" @change="toggleTheme()">
                                     <div class="select-box">
                                         <input type="checkbox" class="options-view-button">
-                                        <div class="background-select-button brd">
-                                            <div id="background-selected-value">
-                                                <span>Select an option</span>
+                                        <div class="select-button brd">
+                                            <div id="theme-selected-value">
+                                                <span>Change theme</span>
                                             </div>
                                             <div class="chevrons">
                                                 <i class="fas fa-chevron-up"></i>
@@ -100,14 +97,50 @@
                                             </div>
                                         </div>
                                         <div class="options">
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="background" value="picture">
+                                            <div class="option" @click="function() { toggleDropdown('#toggle-theme'); disableSelectedBackground(); }">
+                                                <input class="s-c bottom" type="radio" name="theme" value="Default">
+                                                <i class="fas fa-swatchbook"></i>
+                                                <span class="label">Default</span>
+                                            </div>
+                                            <div class="option" @click="function() { toggleDropdown('#toggle-theme'); disableSelectedBackground(); }">
+                                                <input class="s-c bottom" type="radio" name="theme" value="Dark">
+                                                <i class="fas fa-swatchbook"></i>
+                                                <span class="label">Dark</span>
+                                            </div>
+                                            <div class="option" @click="function() { toggleDropdown('#toggle-theme'); disableSelectedBackground(); }">
+                                                <input class="s-c bottom" type="radio" name="theme" value="Light">
+                                                <i class="fas fa-swatchbook"></i>
+                                                <span class="label">Light</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="settings-background" class="settings-section">
+                            <h3><i class="fas fa-brush"></i> Background</h3>
+                            <div class="current-selection">Current background: <div id="selected-background"></div></div>
+                            <div class="select-dropdown">
+                                <form id="toggle-background" class="settings-dropdown" @change="toggleBackgroundStyle()">
+                                    <div class="select-box">
+                                        <input type="checkbox" class="options-view-button">
+                                        <div class="select-button brd">
+                                            <div id="background-selected-value">
+                                                <span>Change background</span>
+                                            </div>
+                                            <div class="chevrons">
+                                                <i class="fas fa-chevron-up"></i>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="options">
+                                            <div class="option" @click="toggleDropdown('#toggle-background')">
                                                 <input class="s-c bottom" type="radio" name="background" value="picture">
                                                 <i class="fas fa-image"></i>
                                                 <span class="label">Picture</span>
                                             </div>
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="background" value="solid">
+                                            <div class="option"  @click="toggleDropdown('#toggle-background')">
                                                 <input class="s-c bottom" type="radio" name="background" value="solid">
                                                 <i class="fas fa-fill"></i>
                                                 <span class="label">Solid Colour</span>
@@ -116,19 +149,27 @@
                                     </div>
                                 </form>
                             </div>
-                            <div v-if="showPictures">select picture</div>
-                            <div v-else-if="showColours">select colour</div>
+                            <div id="picture-search" class="background-change" v-if="showPictures">
+                                <input type="text" name="searchPicture" placeholder="Insert url..." id="change-picture">  <input type="submit" value="OK" id="submitPicture" @click="changeBackgroundPicture()">
+                            </div>
+                            <div id="colour-search" class="background-change" v-else-if="showColours">
+                                <div class="colour-search-label">Choose background colour: </div>
+                                <div class="colour-search-picker">
+                                    <input type="color" name="topbar-font-color" @change="changeBackgroundColour()">
+                                </div>
+                            </div>
                         </div>
 
                         <div id="settings-fonts" class="settings-section">
-                            <h3>Fonts</h3>
+                            <h3><i class="fas fa-i-cursor"></i> Fonts</h3>
+                            <div class="current-selection">Current font: <span id="selected-font"></span></div>
                             <div class="select-dropdown">
-                                <form id="toggle-font" @change="toggleFont()">
+                                <form id="toggle-font" class="settings-dropdown" @change="toggleFont()">
                                     <div class="select-box">
                                         <input type="checkbox" class="options-view-button">
-                                        <div class="background-select-button brd">
+                                        <div class="select-button brd">
                                             <div id="font-selected-value">
-                                                <span>Select a font</span>
+                                                <span>Change font</span>
                                             </div>
                                             <div class="chevrons">
                                                 <i class="fas fa-chevron-up"></i>
@@ -136,38 +177,32 @@
                                             </div>
                                         </div>
                                         <div class="options">
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="background" value="Arial">
+                                            <div class="option"  @click="toggleDropdown('#toggle-font')">
                                                 <input class="s-c bottom" type="radio" name="background" value="Arial">
                                                 <i class="fas fa-i-cursor"></i>
                                                 <span class="label">Arial</span>
                                             </div>
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="background" value="Courier New">
+                                            <div class="option" @click="toggleDropdown('#toggle-font')">
                                                 <input class="s-c bottom" type="radio" name="background" value="Courier New">
                                                 <i class="fas fa-i-cursor"></i>
                                                 <span class="label">Courier New</span>
                                             </div>
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="background" value="Georgia">
+                                            <div class="option" @click="toggleDropdown('#toggle-font')">
                                                 <input class="s-c bottom" type="radio" name="background" value="Georgia">
                                                 <i class="fas fa-i-cursor"></i>
                                                 <span class="label">Georgia</span>
                                             </div>
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="background" value="Helvetica">
+                                            <div class="option" @click="toggleDropdown('#toggle-font')">
                                                 <input class="s-c bottom" type="radio" name="background" value="Helvetica">
                                                 <i class="fas fa-i-cursor"></i>
                                                 <span class="label">Helvetica</span>
                                             </div>
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="background" value="Times New Roman">
+                                            <div class="option" @click="toggleDropdown('#toggle-font')">
                                                 <input class="s-c bottom" type="radio" name="background" value="Times New Roman">
                                                 <i class="fas fa-i-cursor"></i>
                                                 <span class="label">Times New Roman</span>
                                             </div>
-                                            <div class="option">
-                                                <input class="s-c top" type="radio" name="background" value="Verdana">
+                                            <div class="option" @click="toggleDropdown('#toggle-font')">
                                                 <input class="s-c bottom" type="radio" name="background" value="Verdana">
                                                 <i class="fas fa-i-cursor"></i>
                                                 <span class="label">Verdana</span>
@@ -179,7 +214,7 @@
                         </div>
 
                         <div id="settings-colour-palette" class="settings-section">
-                            <h3>Colour Palette</h3>
+                            <h3><i class="fas fa-palette"></i> Colour Palette</h3>
                             <div id="colour-topbar" class="colour-palette-section">
                                 <div class="colour-palette-label">Top bar</div>
                                 <div class="colour-palette-picker">

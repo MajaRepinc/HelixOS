@@ -15,6 +15,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
+var themes = [
+    {
+        "name": "Default",
+        "topBarColour": "#89bdd3",
+        "topBarFontColour": "#ffffff",
+        "innerWindowColour": "#ffffff",
+        "innerWindowFontColour": "#000000",
+        "background": "",
+    },
+    {
+        "name": "Dark",
+        "topBarColour": "#191919",
+        "topBarFontColour": "#e5e5e5",
+        "innerWindowColour": "#4c4c4c",
+        "innerWindowFontColour": "#e5e5e5",
+        "background": "#323232",
+    },
+    {
+        "name": "Light",
+        "topBarColour": "#e5e5e5",
+        "topBarFontColour": "#333333",
+        "innerWindowColour": "#f2f2f2",
+        "innerWindowFontColour": "#333333",
+        "background": "#ffffff",
+    }
+]
+
 
 
 function funKeyFullscreen() {
@@ -46,7 +73,7 @@ function funFullscreen() {
      }
 }
 
-function funDraggable(id) {
+function makeDraggable(id) {
     var element = document.querySelector(id  + " .modal-wrapper"),
         isDragReady = false,
         dragoffset = {
@@ -57,7 +84,7 @@ function funDraggable(id) {
     //events for the element
     this.events = function () {
         var self = this;
-        _on(document.getElementsByClassName('modal-header')[0], 'mousedown', function (e) {
+        _on(element.getElementsByClassName('modal-header')[0], 'mousedown', function (e) {
             //console.log("started dragging");
             isDragReady = true;
             e.preventDefault();
@@ -68,7 +95,7 @@ function funDraggable(id) {
             dragoffset.x = e.pageX - element.offsetLeft;
             dragoffset.y = e.pageY - element.offsetTop;
         });
-        _on(document.getElementsByClassName('modal-header')[0], 'mouseup', function () {
+        _on(element.getElementsByClassName('modal-header')[0], 'mouseup', function () {
             //console.log("stopped dragging");
             isDragReady = false;
         });
@@ -199,6 +226,7 @@ function makeResizableDiv(div) {
   let originalY = 0;
   let originalMouseX = 0;
   let originalMouseY = 0;
+  elementBody.style.height = (element.offsetHeight - header.offsetHeight) + 'px'
   for (let i = 0;i < resizers.length; i++) {
     const currentResizer = resizers[i];
     currentResizer.addEventListener('mousedown', function(e) {
@@ -273,8 +301,12 @@ function checkColourSettings() {
 
     if(settingsAppWindow.innerWindowCol !== "") {
         var allInnerWindows = document.getElementsByClassName("modal-container");
+        var allDropItems = document.getElementsByClassName("options");
         for(var i = 0; i < allInnerWindows.length; i++) {
             allInnerWindows[i].style.backgroundColor = settingsAppWindow.innerWindowCol;
+        }
+        for(var i = 0; i < allDropItems.length; i++) {
+            allDropItems[i].style.backgroundColor = settingsAppWindow.innerWindowCol;
         }
     }
     if(settingsAppWindow.innerWindowFontCol !== "") {
@@ -284,4 +316,27 @@ function checkColourSettings() {
         }
     }
 
+}
+
+function rgbToHex(rgb) {
+    var hex = Number(rgb).toString(16);
+    if (hex.length < 2) {
+       hex = "0" + hex;
+    }
+    return hex;
+};
+
+function fullColorHex(r,g,b) {
+    var red = rgbToHex(r);
+    var green = rgbToHex(g);
+    var blue = rgbToHex(b);
+    return red+green+blue;
+}
+
+function focusWindow(element) {
+    var allOpenWindows = document.querySelectorAll(".modal-wrapper")
+    for (var count = 0; count < allOpenWindows.length; count++) {
+        allOpenWindows[count].style.zIndex = 1;
+    }
+    document.querySelector("#" + element.$el.parentNode.id + " .modal-wrapper").style.zIndex = 100
 }
