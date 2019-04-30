@@ -13,7 +13,7 @@ var windowModalComponent = Vue.component("modal", {
                           <div class="window-expand-shrink" @click="expandShrink()">
                               <div class="fas fa-expand" title="Expand"></div>
                           </div>
-                          <div class="window-minimize">
+                          <div class="window-minimize" @click="minimizeWindow()">
                               <div class="fas fa-minus-circle" title="Minimize"></div>
                           </div>
                           <div class="window-close">
@@ -44,6 +44,15 @@ var windowModalComponent = Vue.component("modal", {
           changeHover();
           changeMiddleBarColour();
           //changeMiddleElementHover();
+      },
+      minimizeWindow: function() {
+          document.getElementById(this.$el.parentNode.id).style.display = "none";
+          var currentWindow = this.$el.parentNode.id.split("-")[0]
+          var topBarElement = document.getElementById(currentWindow + "-id");
+          if(topBarElement.classList.contains("highlighted")) {
+              topBarElement.classList.remove("highlighted");
+              topBarElement.style.background = "";
+          }
       },
       expandShrink: function () {
           expandShrinkWindow("#" + this.$el.parentNode.id);
