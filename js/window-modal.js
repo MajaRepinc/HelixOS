@@ -39,19 +39,26 @@ var windowModalComponent = Vue.component("modal", {
           makeDraggable("#" + this.$el.parentNode.id);
           makeResizableDiv("#" + this.$el.parentNode.id);
           checkColourSettings();
-          focusWindow(this);
+          this.putFocusOnCurrent();
+          changeHighlightedColour();
+          changeHover();
+          changeMiddleBarColour();
+          //changeMiddleElementHover();
       },
       expandShrink: function () {
           expandShrinkWindow("#" + this.$el.parentNode.id);
       },
       putFocusOnCurrent: function () {
           focusWindow(this);
-      },
-      removeMinimizeIcon: function() {
-          var topbarelement = this.$el.parentNode.id.split("-")[0]
-          var currentIndex = document.getElementById(topbarelement + "id").getAttribute;
-          currentIndex = Number(currentIndex);
-          middleBarComponent.removeIcon(currentIndex);
+          middleBarComponent.toggleHighlighted();
+          var currentWindow = this.$el.parentNode.id.split("-")[0]
+          var topBarElement = document.getElementById(currentWindow + "-id");
+          if(!topBarElement.classList.contains("highlighted")) {
+              topBarElement.classList.add("highlighted");
+              //topBarElement.classList.remove("hover-middle-element");
+              topBarElement.style.background = settingsAppWindow.hover;
+          }
+          changeHighlightedColour();
       }
   }
 
@@ -70,15 +77,15 @@ var aboutAppButton = new Vue({
       showAboutWindow: function() {
           console.log("clicked " + aboutAppWindow.name);
           aboutAppWindow.showModal = true;
-          // if(!this.showMinimizeElement) {
-          //     this.toggleTopMiddleElement();
-          //     this.showMinimizeElement = true;
-          // }
+          if(!this.showMinimizeElement) {
+              this.toggleTopMiddleElement();
+              this.showMinimizeElement = true;
+          }
 
       },
       toggleTopMiddleElement: function() {
           middleBarComponent.noOfWindows++;
-          middleBarComponent.addIcon(this.name, this.css, middleBarComponent.noOfWindows);
+          middleBarComponent.addIcon(this.name, this.css);
       }
     }
 });
@@ -88,7 +95,15 @@ var aboutAppWindow = new Vue ({
     data: {
 		name: "about",
         showModal: false
-	}
+	},
+    methods: {
+        removeAboutIcon: function() {
+            var currentIndex = document.getElementById("about-id").getAttribute("index");
+            currentIndex = parseInt(currentIndex);
+            middleBarComponent.removeIcon(currentIndex);
+            aboutAppButton.showMinimizeElement = false;
+        }
+    }
 });
 
 // start settings app
@@ -96,23 +111,23 @@ var settingsAppButton = new Vue({
   el: "#icon-settings",
   data: {
       name: "settings",
-      css: "fas fa-cog"
+      css: "fas fa-cog",
+      showMinimizeElement: false
   },
   methods: {
     showAboutWindow: function() {
         console.log("clicked " + settingsAppWindow.name)
         settingsAppWindow.showModal = true;
-        setTimeout(function(){ settingsAppWindow.checkColourInputs(); }, 10);
 
-        // if(!this.showMinimizeElement) {
-        //     this.toggleTopMiddleElement();
-        //     this.showMinimizeElement = true;
-        // }
+        if(!this.showMinimizeElement) {
+            this.toggleTopMiddleElement();
+            this.showMinimizeElement = true;
+        }
 
     },
     toggleTopMiddleElement: function() {
         middleBarComponent.noOfWindows++;
-        middleBarComponent.addIcon(this.name, this.css, middleBarComponent.noOfWindows);
+        middleBarComponent.addIcon(this.name, this.css);
     }
   }
 });
@@ -120,29 +135,43 @@ var settingsAppButton = new Vue({
 var settingsAppWindow = new Vue ({
     el: "#settings-modal",
     data: {
-		name: "Settings Window",
+		name: "settings",
         showModal: false,
         showPictures: false,
         showColours: false,
-        topBarCol: "",
-        topBarFontCol: "",
-        innerWindowCol: "",
-        innerWindowFontCol: "",
+        topBarCol: "#89bdd3",
+        topBarFontCol: "#ffffff",
+        innerWindowCol: "#ffffff",
+        innerWindowFontCol: "#000000",
         theme: "Default",
         font: "Courier New",
-        background: ""
+        background: "",
+        hover: "#9ad3de"
 	},
     updated: function() {
         this.$nextTick(function () {
             document.getElementById("selected-theme").innerText = this.theme
             document.getElementById("selected-font").innerText = this.font
             document.getElementById("selected-background").style.background = this.background;
+            this.checkColourInputs();
+            changeHover();
+            changeOptionColour();
+            changeOptionHover();
+
         })
     },
     methods: {
-
+        removeSettingsIcon: function() {
+            var currentIndex = document.getElementById("settings-id").getAttribute("index");
+            currentIndex = parseInt(currentIndex);
+            middleBarComponent.removeIcon(currentIndex);
+            settingsAppButton.showMinimizeElement = false;
+        },
         toggleDropdown: function(div) {
             document.querySelector(div + " .options-view-button").checked = false;
+            changeHover();
+            changeOptionColour();
+            changeOptionHover();
         },
         toggleTheme: function() {
             var label = document.querySelector("#theme-selected-value span")
@@ -167,12 +196,27 @@ var settingsAppWindow = new Vue ({
                     this.background = themes[j].background;
                     document.getElementById("workspace").style.background = themes[j].background;
                     document.getElementById("selected-background").style.background = themes[j].background;
+                    if(this.theme === "Light") {
+                        this.hover = "#cccccc"
+                    } else if (this.theme === "Default") {
+                        this.hover = "#9ad3de"
+                    } else {
+                        this.hover = "" + changeColorLuminance(this.topBarCol, 0.9)
 
+                    }
 
                 }
             }
+
+
+
             checkColourSettings();
             this.checkColourInputs();
+            changeHover();
+            changeOptionColour();
+            changeOptionHover();
+            changeHighlightedColour();
+            changeMiddleBarColour();
 
         },
 
@@ -190,11 +234,21 @@ var settingsAppWindow = new Vue ({
                     this.showPictures = true;
                     this.showColours = false;
                     label.innerText = "Picture"
+                    setTimeout(function() {
+                        if(document.getElementById("error-picture")) {
+                            document.getElementById("error-picture").style.display = "none"
+                        }
+                    },10)
                     break;
                 case "solid":
-                    this.showPictures = false;
                     this.showColours = true;
+                    this.showPictures = false;
                     label.innerText = "Solid Colour"
+                    setTimeout(function() {
+                        if(document.querySelector("#colour-search .colour-search-picker")) {
+                            document.querySelector("#colour-search .colour-search-picker").style.display = "inline-block"
+                        }
+                    },10)
                     break;
                 default:
                     this.showPictures = false;
@@ -203,8 +257,16 @@ var settingsAppWindow = new Vue ({
             }
         },
         changeBackgroundPicture: function() {
-
-            this.disableSelectedTheme();
+            var urlValue = document.getElementById("change-picture").value;
+            if(checkURL(urlValue)) {
+                document.getElementById("error-picture").style.display = "none"
+                this.background = "url(" + urlValue + ")"
+                document.getElementById("workspace").style.backgroundImage = this.background
+                document.getElementById("selected-background").style.backgroundImage = this.background;
+                this.disableSelectedTheme();
+            } else {
+                document.getElementById("error-picture").style.display = "block"
+            }
         },
         togglePictureStyle: function() {
             this.disableSelectedTheme();
@@ -212,8 +274,10 @@ var settingsAppWindow = new Vue ({
         changeBackgroundColour: function() {
             var backgroundColor = document.querySelector("#colour-search .colour-search-picker input").value;
             this.background = backgroundColor;
-            document.getElementById("workspace").style.background = backgroundColor;
-            document.getElementById("selected-background").style.background = backgroundColor;
+            document.getElementById("workspace").style.backgroundImage = "none";
+            document.getElementById("selected-background").style.backgroundImage = "none";
+            document.getElementById("workspace").style.backgroundColor = backgroundColor;
+            document.getElementById("selected-background").style.backgroundColor = backgroundColor;
             this.disableSelectedTheme();
         },
         toggleFont: function() {
@@ -235,9 +299,15 @@ var settingsAppWindow = new Vue ({
         changeColourTopBar: function() {
             var colourTopBar = document.querySelector("#colour-topbar input").value;
             this.topBarCol = colourTopBar;
+            this.hover = "" + changeColorLuminance(colourTopBar, 0.9)
             document.getElementById("top-bar").style.backgroundColor = colourTopBar;
             checkColourSettings();
+            changeOptionColour();
+            changeOptionHover();
             this.disableSelectedTheme();
+            changeHighlightedColour();
+            changeMiddleBarColour();
+            //changeMiddleElementHover();
         },
         changeColourTopBarFont: function() {
             var colourTopBarFont = document.querySelector("#colour-topbar-font input").value;
@@ -277,7 +347,8 @@ var settingsAppWindow = new Vue ({
                 }
             }
             this.background = "";
-            document.getElementById("selected-background").background = this.background;
+            document.getElementById("selected-background").backgroundImage = this.background;
+            document.getElementById("selected-background").backgroundColor = this.background;
             this.toggleBackgroundStyle()
         },
         checkColourInputs: function() {
