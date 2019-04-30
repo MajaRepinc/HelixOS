@@ -324,6 +324,7 @@ var settingsAppWindow = new Vue ({
             document.getElementById("top-bar").style.color = colourTopBarFont;
             checkColourSettings();
             this.disableSelectedTheme();
+            changeMiddleBarColour();
         },
         changeColourInnerWindow: function() {
             var colourInnerWindow = document.querySelector("#colour-innerwindow input").value;
