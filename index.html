@@ -20,31 +20,31 @@
         <div id="top-bar">
             <div id="left-top" class="top-bar-component">
 
-                <div id="icon-about" class="left-top-component" title="About">
-                    <i class="fas fa-info-circle" @click="showAboutWindow"></i>
+                <div id="icon-about" class="left-top-component hover-element" title="About" @click="showAboutWindow">
+                    <i class="fas fa-info-circle"></i>
                 </div>
 
-                <div id="icon-settings" class="left-top-component" title="Settings">
-                    <i class="fas fa-cog" @click="showAboutWindow"></i>
+                <div id="icon-settings" class="left-top-component hover-element" title="Settings" @click="showAboutWindow">
+                    <i class="fas fa-cog"></i>
                 </div>
 
-                <div id="icon-apps" class="left-top-component" title="Apps">
+                <div id="icon-apps" class="left-top-component hover-element" title="Apps">
                     <i class="fas fa-th-large"></i>
                 </div>
 
             </div>
 
             <div id="middle-top" class="top-bar-component">
-                <bar-component is="bar-component" v-for="(icon, index) in icons" v-bind:key="icon.name" v-bind:index="icon.index" v-bind:css="icon.css" v-bind:elementid="icon.elementid" v-on:remove="removeIcon()"></bar-component>
+                <bar-component is="bar-component" v-for="(icon, index) in icons" v-bind:key="icon.name" v-bind:index="index" v-bind:css="icon.css" v-bind:elementid="icon.elementid" v-on:remove="removeIcon()"></bar-component>
 
                 <div style="padding:10px 0px; clear:both;"></div>
             </div>
 
             <div id="right-top" class="top-bar-component" title="Date/Time">
 
-                <div id="time-date" class="right-top-component"></div>
+                <div id="time-date" class="right-top-component hover-element"></div>
 
-                <div id="icon-expand" class="right-top-component" title="Expand/Collapse">
+                <div id="icon-expand" class="right-top-component hover-element" title="Expand/Collapse">
                     <i class="fas fa-expand-arrows-alt"></i>
                 </div>
 
@@ -56,7 +56,7 @@
 
             <!-- about-modal-component -->
             <div id="about-modal">
-                <modal v-if="showModal" v-on:close="showModal = false;">
+                <modal v-if="showModal" v-on:close="function() {showModal = false; removeAboutIcon();}">
                   <div slot="header">
                       <div class="fas fa-info-circle modal-icon" style="display:inline-block;"></div><h3>About</h3>
                   </div>
@@ -74,7 +74,7 @@
 
             <!-- settings-modal-component -->
             <div id="settings-modal">
-                <modal v-if="showModal" v-on:close="showModal = false">
+                <modal v-if="showModal" v-on:close="function() {showModal = false; removeSettingsIcon();}">
                     <div slot="header">
                         <div class="fas fa-cog modal-icon" style="display:inline-block;"></div><h3>Settings</h3>
                     </div>
@@ -149,15 +149,20 @@
                                     </div>
                                 </form>
                             </div>
-                            <div id="picture-search" class="background-change" v-if="showPictures">
-                                <input type="text" name="searchPicture" placeholder="Insert url..." id="change-picture">  <input type="submit" value="OK" id="submitPicture" @click="changeBackgroundPicture()">
-                            </div>
-                            <div id="colour-search" class="background-change" v-else-if="showColours">
-                                <div class="colour-search-label">Choose background colour: </div>
-                                <div class="colour-search-picker">
-                                    <input type="color" name="topbar-font-color" @change="changeBackgroundColour()">
+                            <template v-if="showPictures">
+                                <div id="picture-search" class="background-change">
+                                    <input type="text" name="searchPicture" placeholder="Insert link..." id="change-picture">  <input type="submit" value="OK" id="submit-picture" @click="changeBackgroundPicture()">
+                                    <div id="error-picture" style="display:none">Link does not contain image</div>
                                 </div>
-                            </div>
+                            </template>
+                            <template v-else-if="showColours">
+                                <div id="colour-search" class="background-change">
+                                    <div class="colour-search-label">Choose background colour: </div>
+                                    <div class="colour-search-picker">
+                                        <input type="color" name="topbar-font-color" @change="changeBackgroundColour()">
+                                    </div>
+                                </div>
+                            </template>
                         </div>
 
                         <div id="settings-fonts" class="settings-section">
