@@ -1,6 +1,7 @@
 //call functions when page fully loads
 document.addEventListener("DOMContentLoaded", function(event) {
     funStartTime();
+    changeHover();
 
     document.getElementById("icon-expand").onclick = function() {
       funFullscreen();
@@ -30,7 +31,7 @@ var themes = [
         "topBarFontColour": "#e5e5e5",
         "innerWindowColour": "#4c4c4c",
         "innerWindowFontColour": "#e5e5e5",
-        "background": "#323232",
+        "background": "#242424",
     },
     {
         "name": "Light",
@@ -89,7 +90,7 @@ function makeDraggable(id) {
             isDragReady = true;
             e.preventDefault();
             var modalMousedown = document.querySelectorAll(".modal-wrapper")
-            //corssbrowser mouse pointer values
+            //crossbrowser mouse pointer values
             e.pageX = e.pageX || e.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
             e.pageY = e.pageY || e.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
             dragoffset.x = e.pageX - element.offsetLeft;
@@ -318,19 +319,24 @@ function checkColourSettings() {
 
 }
 
-function rgbToHex(rgb) {
-    var hex = Number(rgb).toString(16);
-    if (hex.length < 2) {
-       hex = "0" + hex;
-    }
-    return hex;
-};
+function changeColorLuminance(hex, lum) {
 
-function fullColorHex(r,g,b) {
-    var red = rgbToHex(r);
-    var green = rgbToHex(g);
-    var blue = rgbToHex(b);
-    return red+green+blue;
+	// validate hex string
+	hex = String(hex).replace(/[^0-9a-f]/gi, '');
+	if (hex.length < 6) {
+		hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+	}
+	lum = lum || 0;
+
+	// convert to decimal and change luminosity
+	var rgb = "#", c, i;
+	for (i = 0; i < 3; i++) {
+		c = parseInt(hex.substr(i*2,2), 16);
+		c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+		rgb += ("00"+c).substr(c.length);
+	}
+
+	return rgb;
 }
 
 function focusWindow(element) {
@@ -339,4 +345,119 @@ function focusWindow(element) {
         allOpenWindows[count].style.zIndex = 1;
     }
     document.querySelector("#" + element.$el.parentNode.id + " .modal-wrapper").style.zIndex = 100
+}
+
+
+function changeHover() {
+
+    var topBarElement =document.querySelectorAll('#top-bar .hover-element');
+    for(var i=0;i<topBarElement.length;i++){
+        topBarElement[i].addEventListener('mouseover',topBarHover,false);
+        topBarElement[i].addEventListener('mouseout',topBarHover,false);
+    }
+
+    function topBarHover(event) {
+        if (event.type == 'mouseover') {
+            event.target.style.background = settingsAppWindow.hover
+        }
+        if (event.type == 'mouseout') {
+            event.target.style.background = ""
+        }
+    }
+}
+
+function changeHighlightedColour() {
+    var topBarHighlighted = document.querySelectorAll('#top-bar .highlighted');
+
+    for(var i=0;i<topBarHighlighted.length;i++){
+        topBarHighlighted[i].style.backgroundColor = settingsAppWindow.hover
+    }
+}
+
+function changeMiddleBarColour() {
+    var topBarHighlighted = document.querySelectorAll('#top-bar .top-bar-element');
+
+    for(var i=0;i<topBarHighlighted.length;i++){
+        topBarHighlighted[i].style.borderBottomColor = settingsAppWindow.topBarFontCol
+    }
+}
+
+function changeMiddleElementHover() {
+    var topBarElement =document.querySelectorAll('#top-bar .top-bar-element');
+    for(var i=0;i<topBarElement.length;i++){
+        if(topBarElement[i].classList.contains("hover-middle-element")) {
+            topBarElement[i].addEventListener('mouseover',topMiddleHover,false);
+            topBarElement[i].addEventListener('mouseout',topMiddleHover,false);
+        } else {
+            topBarElement[i].removeEventListener('mouseover',topMiddleHover,false);
+            topBarElement[i].removeEventListener('mouseout',topMiddleHover,false);
+        }
+    }
+
+    function topMiddleHover(event) {
+        if (event.type == 'mouseover') {
+            event.target.style.background = settingsAppWindow.hover
+        }
+        if (event.type == 'mouseout') {
+            event.target.style.background = ""
+        }
+    }
+}
+
+function changeOptionColour() {
+    var optionElement =document.querySelectorAll('#settings-modal .option');
+
+    for(var i=0;i<optionElement.length;i++){
+        optionElement[i].style.backgroundColor = ""
+        optionElement[i].style.color = ""
+        optionElement[i].classList.remove("option-focus");
+        if(optionElement[i].getElementsByClassName("s-c")[0].checked) {
+            optionElement[i].classList.add("option-focus");
+            optionElement[i].style.backgroundColor = settingsAppWindow.topBarCol
+            optionElement[i].style.color = settingsAppWindow.topBarFontCol
+
+        }
+    }
+}
+
+function changeOptionHover() {
+    var optionElement =document.querySelectorAll('#settings-modal .option');
+    var optionElementChecked =document.querySelectorAll('#settings-modal .option input[type="radio"]:checked');
+
+    for(var i=0;i<optionElement.length;i++){
+        optionElement[i].addEventListener('mouseover',optionHover,false);
+        optionElement[i].addEventListener('mouseout',optionHover,false);
+
+    }
+
+    for(var j=0;j<optionElementChecked.length;j++) {
+        optionElementChecked[j].parentNode.removeEventListener('mouseover',optionHover,false);
+        optionElementChecked[j].parentNode.removeEventListener('mouseout',optionHover,false);
+        optionElementChecked[j].removeEventListener('mouseover',optionHover,false);
+        optionElementChecked[j].removeEventListener('mouseout',optionHover,false);
+    }
+
+    function optionHover(event) {
+
+        function str(el) {
+            if (!el) return "null"
+            return el.className || el.tagName;
+        }
+
+
+
+        if (event.type == 'mouseover' && !event.target.parentNode.classList.contains("option-focus")) {
+            event.target.parentNode.style.background = settingsAppWindow.hover
+            event.target.parentNode.style.color = settingsAppWindow.topBarFontCol
+        }
+        if (event.type == 'mouseout' && !event.target.parentNode.classList.contains("option-focus")) {
+            event.target.parentNode.style.background = ""
+            event.target.parentNode.style.color = ""
+        }
+    }
+}
+
+
+function checkURL(url) {
+    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
