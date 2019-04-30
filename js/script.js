@@ -343,8 +343,10 @@ function focusWindow(element) {
     var allOpenWindows = document.querySelectorAll(".modal-wrapper")
     for (var count = 0; count < allOpenWindows.length; count++) {
         allOpenWindows[count].style.zIndex = 1;
+        allOpenWindows[count].style.opacity = 0.7;
     }
     document.querySelector("#" + element.$el.parentNode.id + " .modal-wrapper").style.zIndex = 100
+    document.querySelector("#" + element.$el.parentNode.id + " .modal-wrapper").style.opacity = 1
 }
 
 
@@ -438,14 +440,6 @@ function changeOptionHover() {
     }
 
     function optionHover(event) {
-
-        function str(el) {
-            if (!el) return "null"
-            return el.className || el.tagName;
-        }
-
-
-
         if (event.type == 'mouseover' && !event.target.parentNode.classList.contains("option-focus")) {
             event.target.parentNode.style.background = settingsAppWindow.hover
             event.target.parentNode.style.color = settingsAppWindow.topBarFontCol

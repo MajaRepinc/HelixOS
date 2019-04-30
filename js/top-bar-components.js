@@ -26,8 +26,11 @@ var topBarComponent = Vue.component("bar-component", {
           var allOpenWindows = document.querySelectorAll(".modal-wrapper")
           for (var count = 0; count < allOpenWindows.length; count++) {
               allOpenWindows[count].style.zIndex = 1;
+              allOpenWindows[count].style.opacity = 0.7;
           }
           document.querySelector("#" + currentWindow + " .modal-wrapper").style.zIndex = 100
+          document.querySelector("#" + currentWindow + " .modal-wrapper").style.opacity = 1
+          document.getElementById(currentWindow).style.display = "block"
       }
     }
 });
