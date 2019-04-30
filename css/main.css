@@ -13,6 +13,10 @@ body {
   font-family: "Courier New";
 }
 
+a {
+    color: inherit;
+}
+
 /***********************************
 *           Wrappers               *
 ************************************/
@@ -33,6 +37,9 @@ body {
   height: 40px;
   background-color: #89bdd3;
   color: #fff;
+}
+#top-bar .hover-element *, #top-bar .highlighted *, #top-bar .hover-middle-element *{
+    pointer-events: none;
 }
 .top-bar-component {
     box-sizing: border-box;
@@ -55,9 +62,7 @@ body {
 .left-top-component i {
     padding: 12px;
 }
-.left-top-component:hover {
-    background-color: #9ad3de;
-}
+
 #icon-about {}
 #icon-settings {}
 #icon-apps {}
@@ -76,22 +81,14 @@ body {
     border-bottom: 3px solid #fff;
     text-align: center;
     box-sizing: border-box;
-    display: inline-inline-block;
+    display: inline-block;
     float: left;
+    cursor: pointer;
 }
 
-.top-bar-element:hover {
+/* .top-bar-element.highlighted {
     background-color: #9ad3de;
-}
-
-
-.top-bar-element.highlighted {
-    background-color: #9ad3de;
-}
-
-.top-bar-element.highlighted:hover {
-    background-color: #9ad3de;
-}
+} */
 
 #right-top {
     width: 25%;
@@ -109,13 +106,11 @@ body {
 .right-top-component i {
     padding: 12px;
 }
-.right-top-component:hover {
-    background-color: #9ad3de;
-}
 #time-date {
     width: 85%;
     cursor: default;
     padding: 11px;
+    font-weight: bold;
 }
 #icon-expand {
     width: 15%;
@@ -128,10 +123,10 @@ body {
   flex:1;
   width: 100%;
   background-color: #e3e3e3;
-  background: url("../assets/img/helixos-background.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  background-image: url("../assets/img/helixos-background.png");
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
 }
 
 /***********************************
@@ -288,10 +283,10 @@ body {
     width: 100px;
     height: 70px;
     display: inline-block;
-    background: url("../assets/img/helixos-background.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    background-image: url("../assets/img/helixos-background.png");
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
     border-radius: 4px;
     border: 1px solid #cccccc;
     vertical-align: middle;
@@ -331,7 +326,23 @@ body {
 }
 
 #submit-picture {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
 
+#error-picture {
+    display: none;
+    margin-top: 10px;
+    background-color: rgba(255, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 4px;
+    width: max-content;
+    width: intrinsic;           /* Safari/WebKit uses a non-standard name */
+    width: -moz-max-content;    /* Firefox/Gecko */
+    width: -webkit-max-content; /* Chrome */
+    color: #fff;
+    font-weight: bold;
 }
 /***********************************
 *             Dropdown             *
@@ -475,7 +486,6 @@ input[type="radio"] {
 }
 
 .s-c:hover ~ i {
-    color: #fff;
     opacity: 0;
 }
 
@@ -506,7 +516,7 @@ input[type="radio"] {
 }
 
 .option input[type="radio"]:checked ~ i, .option input[type="radio"]:checked ~ .label {
-    color:#fff;
+    font-weight: bold;
 }
 
 .option input[type="radio"]:checked ~ .label:before {
@@ -517,16 +527,14 @@ input[type="radio"] {
     bottom: 0;
     left: 0;
     z-index: -1;
-    background-color: #89bdd3;
 }
-
 .option:first-child input[type="radio"]:checked ~ .label:before {
     border-radius: 4px 4px 0 0;
 }
 .option:last-child input[type="radio"]:checked ~ .label:before {
     border-radius: 0 0 4px 4px;
 }
-.option:hover .label {
+.option:hover {
     color: #fff;
 }
 
