@@ -3,14 +3,15 @@
 /***********************************
 *           HTML Tags              *
 ************************************/
-html {
-  height: 100%;
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
 }
 body {
-  display: block;
-  height: 100%;
-  margin: 0;
-  font-family: "Courier New";
+    font-family: "Courier New";
 }
 
 a {
@@ -26,6 +27,57 @@ a {
   width: 100%;
   height: 100%;
   margin: 0;
+}
+
+#loading {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0.9;
+    animation: blur 1s forwards;
+    animation-delay: 3s;
+}
+#loading-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 6em;
+    font-weight: bold;
+    transform: translate(-50%, -50%);
+}
+#loading-text {
+    text-align: center;
+    color: #89bdd3;
+    display: inline-block;
+}
+#loading-cursor {
+    display: inline-block;
+    height: 80px;
+    width: 10px;
+    background-color: #89bdd3;
+    z-index: 1;
+    animation: flash 0.5s none infinite alternate;
+}
+@keyframes flash{
+  0%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 0;
+  }
+}
+@keyframes blur{
+  0%{
+    opacity: 0.9;
+
+  }
+  100%{
+    opacity: 0;
+
+  }
 }
 
 /***********************************
@@ -62,10 +114,6 @@ a {
 .left-top-component i {
     padding: 12px;
 }
-
-#icon-about {}
-#icon-settings {}
-#icon-apps {}
 
 #middle-top {
     width: 65%;
@@ -107,6 +155,7 @@ a {
     cursor: default;
     padding: 11px;
     font-weight: bold;
+    white-space: nowrap;
 }
 #icon-expand {
     width: 15%;
@@ -123,6 +172,10 @@ a {
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background-position: center !important;
+}
+
+.mobile-view #workspace {
+    background-image: url("../assets/img/helixos-background-mobile.png");
 }
 
 /***********************************
@@ -213,8 +266,8 @@ a {
 
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
-  -webkit-transform: scale(1.1);
-  transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 .modal-header div:first-child {
     display: inline-block;
@@ -241,7 +294,7 @@ a {
     cursor: default;
 }
 .window-expand-shrink div:hover{
-    color:#737373;
+    color:#00FF5D;
 }
 .window-close div:hover{
     color:#ff3f00;
@@ -530,16 +583,19 @@ input[type="radio"] {
 .option:last-child input[type="radio"]:checked ~ .label:before {
     border-radius: 0 0 4px 4px;
 }
-.option:hover {
-    color: #fff;
+.mobile-view .option:hover{
+    color: inherit;
+    background-color: inherit;
 }
-
  .option:first-child:hover {
     border-radius: 4px 4px 0 0;
 }
 
 .option:hover  {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
     background-color: #9ad3de;
+    color: #fff;
 }
 
  .option:last-child:hover {
@@ -562,13 +618,137 @@ input[type="radio"] {
 @media (min-width: 1025px) { }
 
 /*****Tablet-portrait*****/
-@media (min-width: 768px) and (max-width: 1024px) { }
+@media (min-width: 768px) and (max-width: 1024px) {
+    .mobile-view #workspace {
+        background-image: url("../assets/img/helixos-background-mobile.png");
+    }
+    #middle-top {
+        width: 45%;
+    }
+    #left-top {
+        width: 20%;
+    }
+    #right-top {
+        width: 35%;
+    }
+}
 
 /*****Tablet-landscape*****/
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) { }
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .mobile-view #workspace {
+        background-image: url("../assets/img/helixos-background.png");
+    }
+    #loading-label {
+        font-size: 2em;
+    }
+    #loading-cursor {
+        height: 30px;
+        width: 5px;
+    }
+}
 
 /*****Low Res Tablet, Phone-landscape*****/
-@media (min-width: 481px) and (max-width: 767px) { }
+@media (min-width: 481px) and (max-width: 767px) {
+    .mobile-view #workspace {
+        background-image: url("../assets/img/helixos-background.png");
+    }
+    #middle-top {
+        width: 65%;
+    }
+    #left-top {
+        width: 25%;
+    }
+    #right-top {
+        width: 10%;
+    }
+    #time-date {
+        display: none;
+    }
+    #icon-expand {
+        width: 100%;
+    }
+    .window-expand-shrink {
+        display: none !important;
+    }
+    .modal-wrapper {
+        top: 40px !important;
+        left: 0 !important;
+    }
+    .modal-container {
+        width: 100% !important;
+        max-width: none !important;
+        position: fixed;
+    }
+    #loading-label {
+        font-size: 2em;
+    }
+    #loading-cursor {
+        height: 30px;
+        width: 5px;
+    }
+}
 
 /*****Phone-portrait*****/
-@media (min-width: 320px) and (max-width: 480px) { }
+@media (min-width: 320px) and (max-width: 480px) {
+    #middle-top {
+        width: 50%;
+    }
+    #left-top {
+        width: 35%;
+    }
+    #right-top {
+        width: 15%;
+    }
+    #time-date {
+        display: none;
+    }
+    #icon-expand {
+        width: 100%;
+    }
+    .window-expand-shrink {
+        display: none !important;
+    }
+    .modal-wrapper {
+        top: 40px !important;
+        left: 0 !important;
+    }
+    .modal-container {
+        width: 100% !important;
+        min-width: 0px !important;
+        position: fixed;
+        transition: none;
+    }
+    .modal-body {
+        font-size: 14px;
+    }
+    .current-selection {
+        font-size: 16px;
+    }
+    .settings-dropdown {
+        width: 270px;
+    }
+    .options {
+        width: 268px;
+    }
+    .settings-section > div, .modal-body p{
+        margin-left: 10px;
+    }
+    #selected-background {
+        display: block;
+        margin-top: 10px;
+    }
+    .colour-search-picker {
+        width: 15%;
+    }
+    .colour-search-label {
+        width: 70%;
+    }
+    #loading-label {
+        font-size: 2em;
+    }
+    #loading-cursor {
+        height: 30px;
+        width: 5px;
+    }
+
+}
