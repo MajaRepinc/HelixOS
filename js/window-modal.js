@@ -36,12 +36,23 @@ var windowModalComponent = Vue.component("modal", {
   `,
   methods: {
       initalizeFunctions: function () {
-          makeDraggable("#" + this.$el.parentNode.id);
-          makeResizableDiv("#" + this.$el.parentNode.id);
+          var id = "#" + this.$el.parentNode.id
+          window.onresize = function() {
+              if(window.mobilecheck()) {
+                  onMobileWindowModal(id);
+              }
+          }
+          if(window.mobilecheck()) {
+              console.log("on mobile")
+              onMobileWindowModal("#" + this.$el.parentNode.id)
+          } else {
+              makeDraggable("#" + this.$el.parentNode.id);
+              makeResizableDiv("#" + this.$el.parentNode.id);
+          }
+          changeHover();
           checkColourSettings();
           this.putFocusOnCurrent();
           changeHighlightedColour();
-          changeHover();
           changeMiddleBarColour();
           //changeMiddleElementHover();
       },
