@@ -2,20 +2,27 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    document.oncontextmenu = function() {
+        return false;
+    }
+    document.getElementById("workspace").addEventListener('mousedown', showContextMenu, false);
     //create loading screen to fully load all content
     loadingScreen(document.getElementById("loading-label"), 100);
 
-    setTimeout(function() { document.getElementById("loading").style.display = "none";}, 4000);
+    setTimeout(function() { document.getElementById("loading").style.display = "none";}, 3500);
 
     //start clock
     startTime();
 
     //enable listeners on hover
     changeHover();
+    changeContextMenuHover();
 
     document.getElementById("icon-expand").onclick = function() {
-      triggerFullscreen();
+        triggerFullscreen();
     };
+
+
 
     document.addEventListener('keyup', function (event) {
       if (event.defaultPrevented) { return; }
@@ -36,6 +43,19 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 
 });
+
+function showContextMenu(event) {
+    event.preventDefault();
+    var targetElement = (event.target || event.srcElement);
+    if(event.button === 2 && targetElement.getAttribute('class') !== "modal-wrapper" && targetElement.parentNode.id !== "settings-modal") {
+        console.log(targetElement);
+        document.getElementById("context-menu").style.left = event.clientX + "px"
+        document.getElementById("context-menu").style.top = event.clientY + "px"
+        document.getElementById("context-menu").style.display = "block"
+    } else if (event.button !== 2 && event.target.id !== "context-menu") {
+        document.getElementById("context-menu").style.display = "none"
+    }
+}
 
 
 function loadingScreen(elementClass, typingSpeed){
@@ -390,14 +410,19 @@ function onMobileWindowModal(div) {
     const container = document.querySelector('#workspace');
 
     element.querySelector(".modal-body").style.height = (container.offsetHeight - header.offsetHeight) + 'px'
-    element.style.height = container.offsetHeight + 'px'
-
+    element.style.height = container.offsetHeight + 'px';
+    element.style.width = "100%";
+    element.style.minWidth = 0;
+    element.style.transition = "none";
+    element.style.position = "fixed";
 }
 
 
 
 
 function checkColourSettings() {
+    var contextMenu = document.getElementById("context-menu");
+    var contextSubMenuPrograms = document.getElementById("contex-submenu-programs");
     if(settingsAppWindow.topBarCol !== "") {
         var allHeaders = document.getElementsByClassName("modal-header");
         for(var i = 0; i < allHeaders.length; i++) {
@@ -415,18 +440,23 @@ function checkColourSettings() {
     if(settingsAppWindow.innerWindowCol !== "") {
         var allInnerWindows = document.getElementsByClassName("modal-container");
         var allDropItems = document.getElementsByClassName("options");
+
         for(var i = 0; i < allInnerWindows.length; i++) {
             allInnerWindows[i].style.backgroundColor = settingsAppWindow.innerWindowCol;
         }
         for(var i = 0; i < allDropItems.length; i++) {
             allDropItems[i].style.backgroundColor = settingsAppWindow.innerWindowCol;
         }
+        contextMenu.style.backgroundColor = settingsAppWindow.innerWindowCol;
+        contextSubMenuPrograms.style.backgroundColor = settingsAppWindow.innerWindowCol;
     }
     if(settingsAppWindow.innerWindowFontCol !== "") {
         var allInnerWindowsFont = document.getElementsByClassName("modal-container");
         for(var i = 0; i < allInnerWindowsFont.length; i++) {
             allInnerWindowsFont[i].style.color = settingsAppWindow.innerWindowFontCol;
         }
+        contextMenu.style.color = settingsAppWindow.innerWindowFontCol;
+        contextSubMenuPrograms.style.color = settingsAppWindow.innerWindowFontCol;
     }
 
 }
@@ -476,6 +506,26 @@ function changeHover() {
         }
         if (event.type == 'mouseout') {
             event.target.style.background = ""
+        }
+    }
+}
+
+function changeContextMenuHover() {
+
+    var topBarElement =document.querySelectorAll('#context-menu .hover-element');
+    for(var i=0;i<topBarElement.length;i++){
+        topBarElement[i].addEventListener('mouseover',contextMenuHover,false);
+        topBarElement[i].addEventListener('mouseout',contextMenuHover,false);
+    }
+
+    function contextMenuHover(event) {
+        if (event.type == 'mouseover') {
+            event.target.style.background = settingsAppWindow.hoverContext;
+            event.target.style.color = settingsAppWindow.topBarFontCol;
+        }
+        if (event.type == 'mouseout') {
+            event.target.style.background = "";
+            event.target.style.color = "";
         }
     }
 }

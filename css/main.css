@@ -36,8 +36,8 @@ a {
     width: 100%;
     height: 100%;
     background: #fff;
-    opacity: 0.9;
-    animation: blur 1s forwards;
+    /* opacity: 0.9; */
+    animation: blur 0.5s forwards;
     animation-delay: 3s;
 }
 #loading-label {
@@ -62,22 +62,64 @@ a {
     animation: flash 0.5s none infinite alternate;
 }
 @keyframes flash{
-  0%{
-    opacity: 1;
-  }
-  100%{
-    opacity: 0;
-  }
+  0%{ opacity: 1; }
+  100%{ opacity: 0; }
 }
-@keyframes blur{
-  0%{
-    opacity: 0.9;
+@keyframes blur {
+  0%{ opacity: 1; }
+  100%{ opacity: 0; }
+}
 
-  }
-  100%{
-    opacity: 0;
+#context-menu {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    background: #fff;
+    border-radius: 4px;
+    font-weight: bold;
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+}
+.contex-menu-element, .contex-menu-subelement {
+    padding: 10px;
+    border-bottom: 1px solid #cccccc;
+    line-height: 1;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+.contex-menu-element:last-child, .contex-menu-subelement:last-child {
+    border-bottom:none;
+}
+#context-menu .fas{
+    padding-right: 10px;
+    line-height: 1;
+    vertical-align: middle;
+}
+#context-menu .fa-chevron-right{
+    padding-right: 0px;
+    padding-left: 5px;
+}
+#context-menu .hover-element * {
+    pointer-events: none;
+}
 
-  }
+#context-programs:hover + #contex-submenu-programs {
+    display: block;
+}
+#contex-submenu-programs:hover {
+    display: block;
+}
+#contex-submenu-programs {
+    display: none;
+    position: absolute;
+    width: 100%;
+    background: #fff;
+    border-radius: 4px;
+    font-weight: bold;
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+    margin-left: 20px;
 }
 
 /***********************************

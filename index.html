@@ -23,7 +23,7 @@
                     <i class="fas fa-info-circle"></i>
                 </div>
 
-                <div id="icon-settings" class="left-top-component hover-element" title="Settings" @click="showAboutWindow">
+                <div id="icon-settings" class="left-top-component hover-element" title="Settings" @click="showSettingsWindow">
                     <i class="fas fa-cog"></i>
                 </div>
 
@@ -248,6 +248,22 @@
                 </modal>
             </div>
 
+        </div>
+    </div>
+    <div id="context-menu">
+        <div class="contex-menu-element hover-element" id="context-settings" @click="showSettingsWindow">
+            <i class="fas fa-cog"></i>
+            <span class="context-menu-label">Open settings</span>
+        </div>
+        <div class="contex-menu-element hover-element" id="context-programs">
+            <i class="fas fa-th-large"></i>
+            <span class="context-menu-label">Open program <i class="fas fa-chevron-right"></i></span>
+
+        </div>
+        <div id="contex-submenu-programs">
+            <div class="contex-menu-element hover-element">
+                <i class="fas fa-calculator"></i><span class="context-menu-label">Program</span>
+            </div>
         </div>
     </div>
     <div id="loading"><div id="loading-label"><div id="loading-text">loading...</div></div></div>

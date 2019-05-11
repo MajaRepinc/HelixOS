@@ -55,6 +55,8 @@ var windowModalComponent = Vue.component("modal", {
           changeHighlightedColour();
           changeMiddleBarColour();
           //changeMiddleElementHover();
+
+          document.getElementById("workspace").removeEventListener('mousedown', showContextMenu, false);
       },
       minimizeWindow: function() {
           document.getElementById(this.$el.parentNode.id).style.display = "none";
@@ -122,6 +124,7 @@ var aboutAppWindow = new Vue ({
             currentIndex = parseInt(currentIndex);
             middleBarComponent.removeIcon(currentIndex);
             aboutAppButton.showMinimizeElement = false;
+            document.getElementById("workspace").addEventListener('mousedown', showContextMenu, false);
         }
     }
 });
@@ -135,7 +138,33 @@ var settingsAppButton = new Vue({
       showMinimizeElement: false
   },
   methods: {
-    showAboutWindow: function() {
+    showSettingsWindow: function() {
+        console.log("clicked " + settingsAppWindow.name)
+        settingsAppWindow.showModal = true;
+
+        if(!this.showMinimizeElement) {
+            this.toggleTopMiddleElement();
+            this.showMinimizeElement = true;
+        }
+
+    },
+    toggleTopMiddleElement: function() {
+        middleBarComponent.noOfWindows++;
+        middleBarComponent.addIcon(this.name, this.css);
+    }
+  }
+});
+
+var settingsAppContext = new Vue({
+  el: "#context-settings",
+  data: {
+      name: "settings",
+      css: "fas fa-cog",
+      showMinimizeElement: false
+  },
+  methods: {
+    showSettingsWindow: function() {
+        document.getElementById("context-menu").style.display = "none"
         console.log("clicked " + settingsAppWindow.name)
         settingsAppWindow.showModal = true;
 
@@ -166,7 +195,8 @@ var settingsAppWindow = new Vue ({
         theme: "Default",
         font: "Courier New",
         background: "",
-        hover: "#9ad3de"
+        hover: "#9ad3de",
+        hoverContext: "#9ad3de"
 	},
     updated: function() {
         this.$nextTick(function () {
@@ -175,6 +205,7 @@ var settingsAppWindow = new Vue ({
             document.getElementById("selected-background").style.background = this.background;
             this.checkColourInputs();
             changeHover();
+            changeContextMenuHover();
             changeOptionColour();
             changeOptionHover();
 
@@ -186,6 +217,8 @@ var settingsAppWindow = new Vue ({
             currentIndex = parseInt(currentIndex);
             middleBarComponent.removeIcon(currentIndex);
             settingsAppButton.showMinimizeElement = false;
+            settingsAppContext.showMinimizeElement = false;
+            document.getElementById("workspace").addEventListener('mousedown', showContextMenu, false);
         },
         toggleDropdown: function(div) {
             document.querySelector(div + " .options-view-button").checked = false;
@@ -217,12 +250,14 @@ var settingsAppWindow = new Vue ({
                     document.getElementById("workspace").style.background = themes[j].background;
                     document.getElementById("selected-background").style.background = themes[j].background;
                     if(this.theme === "Light") {
-                        this.hover = "#cccccc"
+                        this.hover = "#cccccc";
+                        this.hoverContext = "#cccccc";
                     } else if (this.theme === "Default") {
-                        this.hover = "#9ad3de"
+                        this.hover = "#9ad3de";
+                        this.hoverContext = "#9ad3de";
                     } else {
                         this.hover = "" + changeColorLuminance(this.topBarCol, 0.9)
-
+                        this.hoverContext = "" + changeColorLuminance(this.topBarCol, 0.9)
                     }
 
                 }
@@ -233,6 +268,7 @@ var settingsAppWindow = new Vue ({
             checkColourSettings();
             this.checkColourInputs();
             changeHover();
+            changeContextMenuHover();
             changeOptionColour();
             changeOptionHover();
             changeHighlightedColour();
@@ -339,9 +375,11 @@ var settingsAppWindow = new Vue ({
         },
         changeColourInnerWindow: function() {
             var colourInnerWindow = document.querySelector("#colour-innerwindow input").value;
+            this.hoverContext = "" + changeColorLuminance(colourInnerWindow, 0.7)
             this.innerWindowCol = colourInnerWindow;
             checkColourSettings();
             this.disableSelectedTheme();
+            changeContextMenuHover();
         },
         changeColourInnerWindowFont: function() {
             var colourInnerWindowFont = document.querySelector("#colour-innerwindow-font input").value;
