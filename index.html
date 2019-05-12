@@ -31,6 +31,15 @@
                     <i class="fas fa-th-large"></i>
                 </div>
 
+                <div id="apps-dropdown">
+                    <div id="icon-search" title="Search" class="left-top-component hover-element" @click="showSearchWindow">
+                        <i class="fas fa-search"></i> <span class="apps-label">Search</span>
+                    </div>
+                    <div id="icon-calculator" title="Calculator" class="left-top-component hover-element" @click="showCalculatorWindow">
+                        <i class="fas fa-calculator"></i> <span class="apps-label">Calculator</span>
+                    </div>
+                </div>
+
             </div>
 
             <div id="middle-top" class="top-bar-component">
@@ -248,6 +257,57 @@
                 </modal>
             </div>
 
+            <!-- search-modal-component -->
+            <div id="search-modal">
+                <modal v-if="showModal" v-on:close="function() {showModal = false; removeSearchIcon();}">
+                  <div slot="header">
+                      <div class="fas fa-search modal-icon" style="display:inline-block;"></div><h3>Search</h3>
+                  </div>
+                  <div slot="body">
+                      <div id="search-wrapper">
+                            <input id="search-text" type="text" placeholder="Google Search..." name="search" v-on:keyup="keymonitor">
+                            <button id="search-submit" class="hover-element" type="submit" @click="searchContent"><i class="fa fa-search"></i></button>
+                      </div>
+                  </div>
+                </modal>
+            </div>
+
+
+            <!-- calculator-modal-component -->
+            <div id="calculator-modal">
+                <modal v-if="showModal" v-on:close="function() {showModal = false; removeCalculatorIcon();}">
+                  <div slot="header">
+                      <div class="fas fa-calculator modal-icon" style="display:inline-block;"></div><h3>Calculator</h3>
+                  </div>
+                  <div slot="body">
+                      <div class="calculator">
+                          <div class="calculator-wrapper">
+                              <div class="display-wrapper">
+                                  <h3 class="evaluate">{{ state.toEval }}</h3>
+                                  <div id="display">{{ state.current }}</div>
+                              </div>
+                              <button type="button" id="clear" class="clear" value="AC" @click="handleClick">AC</button>
+                              <button type="button" id="divide" class="operator" value="÷" @click="handleClick">÷</button>
+                              <button type="button" id="multiply" class="operator" value="x" @click="handleClick">x</button>
+                              <button type="button" id="seven" class="num" value="7" @click="handleClick">7</button>
+                              <button type="button" id="eight" class="num" value="8" @click="handleClick">8</button>
+                              <button type="button" id="nine" class="num" value="9" @click="handleClick">9</button>
+                              <button type="button" id="add" class="operator" value="+" @click="handleClick">+</button>
+                              <button type="button" id="four" class="num" value="4" @click="handleClick">4</button>
+                              <button type="button" id="five" class="num" value="5" @click="handleClick">5</button>
+                              <button type="button" id="six" class="num" value="6" @click="handleClick">6</button>
+                              <button type="button" id="subtract" class="operator" value="-" @click="handleClick">-</button>
+                              <button type="button" id="one" class="num" value="1" @click="handleClick">1</button>
+                              <button type="button" id="two" class="num" value="2" @click="handleClick">2</button>
+                              <button type="button" id="three" class="num" value="3" @click="handleClick">3</button>
+                              <button type="button" id="equals" class="equals" value="=" @click="handleClick">=</button>
+                              <button type="button" id="zero" class="num" value="0" @click="handleClick">0</button>
+                              <button type="button" id="decimal" class="decimal" value="." @click="handleClick">.</button>
+                          </div>
+                      </div>
+                  </div>
+                </modal>
+            </div>
         </div>
     </div>
     <div id="context-menu">
@@ -261,8 +321,11 @@
 
         </div>
         <div id="contex-submenu-programs">
-            <div class="contex-menu-element hover-element">
-                <i class="fas fa-calculator"></i><span class="context-menu-label">Program</span>
+            <div class="contex-menu-element hover-element" id="context-search" @click="showSearchWindow">
+                <i class="fas fa-search"></i><span class="context-menu-label">Search</span>
+            </div>
+            <div class="contex-menu-element hover-element" id="context-calculator" @click="showCalculatorWindow">
+                <i class="fas fa-calculator"></i><span class="context-menu-label">Calculator</span>
             </div>
         </div>
     </div>

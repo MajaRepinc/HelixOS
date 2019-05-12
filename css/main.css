@@ -87,6 +87,7 @@ a {
     line-height: 1;
     vertical-align: middle;
     box-sizing: border-box;
+    white-space: nowrap;
 }
 .contex-menu-element:last-child, .contex-menu-subelement:last-child {
     border-bottom:none;
@@ -134,6 +135,7 @@ a {
 }
 #top-bar .hover-element *, #top-bar .highlighted *, #top-bar .hover-middle-element *{
     pointer-events: none;
+    cursor: pointer;
 }
 .top-bar-component {
     box-sizing: border-box;
@@ -156,7 +158,46 @@ a {
 .left-top-component i {
     padding: 12px;
 }
-
+#icon-apps:hover + #apps-dropdown {
+    display: block;
+}
+#apps-dropdown:hover {
+    display: block;
+}
+#apps-dropdown {
+    display: none;
+    position: absolute;
+    top: 40px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #cccccc;
+    border-top: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    z-index: 500;
+    min-width: 150px;
+    max-width: 170px;
+}
+#apps-dropdown .fas {
+    padding: 8px;
+}
+#apps-dropdown .left-top-component{
+    border-bottom: 1px solid #cccccc;
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-size: 0.9em;
+}
+#apps-dropdown .left-top-component:last-child{
+    border-bottom: none;
+}
+#icon-calculator {
+    width: 100%;
+}
+.apps-label {
+    padding-right: 15px;
+    font-weight: bold;
+}
 #middle-top {
     width: 65%;
     display: inline-block;
@@ -227,6 +268,8 @@ a {
   position: fixed;
   z-index: 100;
   text-align: left;
+  top: 10%;
+  left: 10%;
 }
 .modal-wrapper.fullscreenWindow {
     top: 40px !important;
@@ -238,8 +281,8 @@ a {
     position: fixed;
 }
 .modal-container {
-  min-width: 400px;
-  min-height: 200px;
+  min-width: 350px;
+  min-height: 130px;
   width: 500px;
   height: 450px;
   margin: 0px auto;
@@ -434,6 +477,178 @@ a {
     width: -webkit-max-content; /* Chrome */
     color: #fff;
     font-weight: bold;
+}
+
+/***********************************
+*             Search               *
+************************************/
+#search-modal .modal-container{
+    height: 130px !important;
+    width: 350px;
+}
+#search-wrapper{
+    width: 100%;
+    white-space: nowrap;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: inherit;
+}
+#search-wrapper * {
+    vertical-align: middle;
+    line-height: 1;
+    color: inherit;
+}
+#search-wrapper *:focus {
+    outline: none;
+}
+#search-text{
+    width: 70%;
+    display: inline-block;
+    height: 50px;
+    padding: 0px 15px;
+    font-size: 1em;
+    font-family: inherit;
+    border: none;
+    background-color: inherit;
+
+}
+#search-submit {
+    width: 18%;
+    height: 50px;
+    display: inline-block;
+    text-align: center;
+    background: none;
+    border: none;
+    border-left: 1px solid #ccc;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 1em;
+}
+#search-submit:hover {
+    box-shadow: 0 0 5px #ccc inset;
+}
+#search-submit * {
+    pointer-events: none;
+    text-align: center;
+}
+
+/***********************************
+*           Calculator             *
+************************************/
+#calculator-modal .calculator {
+    height: 100%;
+}
+#calculator-modal .modal-container {
+    width: 400px;
+}
+#calculator-modal .modal-body > div {
+    height: 100%;
+}
+#calculator-modal .modal-body {
+    padding: 0;
+    overflow: hidden;
+}
+#calculator-modal .modal-body h3 {
+    border: none;
+    padding: 0;
+}
+
+#calculator-modal .calculator-wrapper {
+  background-color: #d6d6c7;
+  overflow: hidden;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 120px repeat(5, 1fr);
+  grid-gap: 1px;
+  margin: 0;
+  height: 100%;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+#calculator-modal .display-wrapper {
+  position: relative;
+  grid-column: 1/-1;
+  margin-bottom: -1px;
+  padding: 1.3rem;
+  font-weight: 400;
+  font-size: 3rem;
+  background-color: #2b3a42;
+  color: #fff;
+  border: none;
+  text-align: right;
+
+}
+
+#calculator-modal .evaluate {
+  overflow: hidden;
+  margin: 0;
+  padding-right: 2px;
+  color: #bdd3de;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+#zero {
+  grid-column: 1/3;
+}
+
+#equals {
+  grid-row: 5/-1;
+  grid-column: 4
+}
+
+#clear {
+  grid-column: 1/3;
+}
+
+#calculator-modal button {
+  border: none;
+  font-size: 2.4rem;
+  background-color: #FFFFFB;
+  font-weight: 300;
+    font-family : inherit;
+
+}
+#calculator-modal button:hover {
+    cursor: pointer;
+    background-color: #e5e5e1;
+}
+
+#calculator-modal button:active {
+    background-color: #ccccc8;
+}
+
+#calculator-modal button:focus {
+    outline: none;
+}
+
+#calculator-modal .clear {
+  background-color: #bdd3de;
+
+}
+#calculator-modal .clear:hover {
+    background-color: #a7bbc4;
+}
+
+#calculator-modal .clear:active {
+    background-color: #91a2ab;
+}
+
+#calculator-modal button[class='operator'],
+#calculator-modal button[class='equals'] {
+  background-color: #FF5964;
+  color: #fff;
+}
+#calculator-modal button[class='operator']:hover, button[class='equals']:hover {
+    background-color: #e5505a;
+}
+#calculator-modal button[class='equals']:active, button[class='equals']:active {
+    background-color: #cc4750;
 }
 /***********************************
 *             Dropdown             *

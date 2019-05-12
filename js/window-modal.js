@@ -56,7 +56,6 @@ var windowModalComponent = Vue.component("modal", {
           changeMiddleBarColour();
           //changeMiddleElementHover();
 
-          document.getElementById("workspace").removeEventListener('mousedown', showContextMenu, false);
       },
       minimizeWindow: function() {
           document.getElementById(this.$el.parentNode.id).style.display = "none";
@@ -124,10 +123,91 @@ var aboutAppWindow = new Vue ({
             currentIndex = parseInt(currentIndex);
             middleBarComponent.removeIcon(currentIndex);
             aboutAppButton.showMinimizeElement = false;
-            document.getElementById("workspace").addEventListener('mousedown', showContextMenu, false);
         }
     }
 });
+
+
+var searchAppButton = new Vue({
+    el: "#icon-search",
+    data: {
+        name: "search",
+        css: "fas fa-search",
+        showMinimizeElement: false
+    },
+    methods: {
+      showSearchWindow: function() {
+          console.log("clicked " + searchAppWindow.name);
+          searchAppWindow.showModal = true;
+          if(!this.showMinimizeElement) {
+              this.toggleTopMiddleElement();
+              this.showMinimizeElement = true;
+          }
+
+      },
+      toggleTopMiddleElement: function() {
+          middleBarComponent.noOfWindows++;
+          middleBarComponent.addIcon(this.name, this.css);
+      }
+    }
+});
+
+var searchAppContext = new Vue({
+  el: "#context-search",
+  data: {
+      name: "search",
+      css: "fas fa-search",
+      showMinimizeElement: false
+  },
+  methods: {
+    showSearchWindow: function() {
+        document.getElementById("context-menu").style.display = "none"
+        console.log("clicked " + searchAppWindow.name)
+        searchAppWindow.showModal = true;
+
+        if(!this.showMinimizeElement) {
+            this.toggleTopMiddleElement();
+            this.showMinimizeElement = true;
+        }
+
+    },
+    toggleTopMiddleElement: function() {
+        middleBarComponent.noOfWindows++;
+        middleBarComponent.addIcon(this.name, this.css);
+    }
+  }
+});
+
+var searchAppWindow = new Vue ({
+    el: "#search-modal",
+    data: {
+		name: "search",
+        showModal: false
+	},
+    methods: {
+        removeSearchIcon: function() {
+            var currentIndex = document.getElementById("search-id").getAttribute("index");
+            currentIndex = parseInt(currentIndex);
+            middleBarComponent.removeIcon(currentIndex);
+            searchAppButton.showMinimizeElement = false;
+            searchAppContext.showMinimizeElement = false;
+        },
+        keymonitor: function(event) {
+            var searchValue = document.getElementById("search-text").value;
+            if(event.key == "Enter" && searchValue !== "") {
+               window.open("http://google.com/search?q=" + searchValue, '_blank');
+            }
+        },
+        searchContent: function() {
+            var searchValue = document.getElementById("search-text").value;
+            if(searchValue !== "") {
+                window.open("http://google.com/search?q=" + searchValue, '_blank');
+            }
+        }
+    }
+});
+
+
 
 // start settings app
 var settingsAppButton = new Vue({
@@ -218,7 +298,6 @@ var settingsAppWindow = new Vue ({
             middleBarComponent.removeIcon(currentIndex);
             settingsAppButton.showMinimizeElement = false;
             settingsAppContext.showMinimizeElement = false;
-            document.getElementById("workspace").addEventListener('mousedown', showContextMenu, false);
         },
         toggleDropdown: function(div) {
             document.querySelector(div + " .options-view-button").checked = false;
@@ -243,6 +322,8 @@ var settingsAppWindow = new Vue ({
                     this.innerWindowFontCol = themes[j].innerWindowFontColour;
                     document.getElementById("top-bar").style.backgroundColor = themes[j].topBarColour;
                     document.getElementById("top-bar").style.color = themes[j].topBarFontColour;
+                    document.getElementById("apps-dropdown").style.backgroundColor = themes[j].innerWindowColour;
+                    document.getElementById("apps-dropdown").style.color = themes[j].innerWindowFontColour;
                     label.innerText = themes[j].name;
                     this.theme = themes[j].name;
                     document.getElementById("selected-theme").innerText = themes[j].name;
@@ -377,6 +458,7 @@ var settingsAppWindow = new Vue ({
             var colourInnerWindow = document.querySelector("#colour-innerwindow input").value;
             this.hoverContext = "" + changeColorLuminance(colourInnerWindow, 0.7)
             this.innerWindowCol = colourInnerWindow;
+            document.getElementById("apps-dropdown").style.backgroundColor = colourInnerWindow;
             checkColourSettings();
             this.disableSelectedTheme();
             changeContextMenuHover();
@@ -384,6 +466,7 @@ var settingsAppWindow = new Vue ({
         changeColourInnerWindowFont: function() {
             var colourInnerWindowFont = document.querySelector("#colour-innerwindow-font input").value;
             this.innerWindowFontCol = colourInnerWindowFont;
+            document.getElementById("apps-dropdown").style.color = colourInnerWindowFont;
             checkColourSettings();
             this.disableSelectedTheme();
         },
@@ -433,6 +516,161 @@ var settingsAppWindow = new Vue ({
                 document.querySelector("#colour-innerwindow-font input").value = this.innerWindowFontCol
             } else {
                 document.querySelector("#colour-innerwindow-font input").value = "#000000"
+            }
+        }
+    }
+});
+
+
+
+var calculatorAppButton = new Vue({
+    el: "#icon-calculator",
+    data: {
+        name: "calculator",
+        css: "fas fa-calculator",
+        showMinimizeElement: false
+    },
+    methods: {
+        showCalculatorWindow: function() {
+            console.log("clicked " + calculatorAppWindow.name)
+            calculatorAppWindow.showModal = true;
+
+            if(!this.showMinimizeElement) {
+                this.toggleTopMiddleElement();
+                this.showMinimizeElement = true;
+            }
+
+        },
+        toggleTopMiddleElement: function() {
+            middleBarComponent.noOfWindows++;
+            middleBarComponent.addIcon(this.name, this.css);
+        }
+    }
+});
+
+var calculatorAppContext = new Vue({
+  el: "#context-calculator",
+  data: {
+      name: "calculator",
+      css: "fas fa-calculator",
+      showMinimizeElement: false
+  },
+  methods: {
+    showCalculatorWindow: function() {
+        document.getElementById("context-menu").style.display = "none"
+        console.log("clicked " + calculatorAppWindow.name)
+        calculatorAppWindow.showModal = true;
+
+        if(!this.showMinimizeElement) {
+            this.toggleTopMiddleElement();
+            this.showMinimizeElement = true;
+        }
+
+    },
+    toggleTopMiddleElement: function() {
+        middleBarComponent.noOfWindows++;
+        middleBarComponent.addIcon(this.name, this.css);
+    }
+  }
+});
+
+var calculatorAppWindow = new Vue({
+    el: "#calculator-modal",
+    data: {
+		name: "calculator",
+        showModal: false,
+        state: {
+            previouslyClicked: "num",
+            current: "",
+            toEval: ""
+        }
+	},
+    methods: {
+        removeCalculatorIcon: function() {
+            var currentIndex = document.getElementById("calculator-id").getAttribute("index");
+            currentIndex = parseInt(currentIndex);
+            middleBarComponent.removeIcon(currentIndex);
+            calculatorAppButton.showMinimizeElement = false;
+            calculatorAppContext.showMinimizeElement = false;
+        },
+        handleClick: function(val) {
+            const className = (val.target || val.srcElement).getAttribute('class');
+            const value = (val.target || val.srcElement).getAttribute('value');
+            const current = this.state.current;
+            const toEval = this.state.toEval;
+            const previouslyClicked = this.state.previouslyClicked;
+            if (className === "num") {
+                if (value === "0" && current === "0") {
+                    return;
+                } else if (previouslyClicked === "operator") {
+                    this.state.current = value;
+                    this.state.toEval = toEval + value;
+                    this.state.previouslyClicked = className;
+                } else if (previouslyClicked === "equals") {
+                    this.state.current = value;
+                    this.state.toEval = value;
+                    this.state.previouslyClicked = className;
+                }
+                else if (current === "0" && className === "num" && toEval.length === 1) {
+                    this.state.current = value;
+                    this.state.toEval = value;
+                    this.state.previouslyClicked = className;
+                } else {
+                    this.state.current = current + value;
+                    this.state.toEval = toEval + value;
+                    this.state.previouslyClicked = className;
+                }
+            }
+            // Handle decimal
+            if (className === "decimal") {
+                if (previouslyClicked === "equals") {
+                    this.state.previouslyClicked = className;
+                    this.state.current =  value;
+                    this.state.toEval = value;
+                } else if (previouslyClicked !== "num" || /[.]/.test(current)) {
+                    return;
+                } else {
+                    this.state.previouslyClicked = className;
+                    this.state.current = current + value;
+                    this.state.toEval = toEval + value;
+                }
+            }
+            // Handle Operators
+            if (className === "operator") {
+                if (previouslyClicked === "operator") {
+                    this.state.toEval = toEval.substring(0, toEval.length - 1) + value;
+                    this.state.current = value;
+                } else if (previouslyClicked === "equals") {
+                    this.state.toEval = current + value;
+                    this.state.current =  value;
+                    this.state.previouslyClicked = className;
+                } else {
+                    this.state.previouslyClicked = className;
+                    this.state.current = value;
+                    this.state.toEval = toEval + value;
+                }
+
+            }
+            // Handle  Equals
+            if (className === "equals") {
+                let expression = toEval;
+                if (previouslyClicked === "equals") {
+                    return;
+                } else if (previouslyClicked === "operator") {
+                    expression = expression.substring(0, toEval.length - 1);
+                } else {
+                    // eslint-disable-next-line no-eval
+                    const result = eval(expression.replace(/x/g, "*").replace(/÷/g, "/"));
+                    this.state.current = result;
+                    this.state.toEval = expression + value + result;
+                    this.state.previouslyClicked = className;
+                }
+            }
+            // Handle Clear
+            if (className === "clear") {
+                this.state.previouslyClicked =  "num";
+                this.state.current = "";
+                this.state.toEval = "";
             }
         }
     }
