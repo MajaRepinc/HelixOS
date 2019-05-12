@@ -2,10 +2,23 @@
 
 document.addEventListener("DOMContentLoaded", function(event) {
 
+    //set postion of the apps dropdown
+    document.getElementById("apps-dropdown").style.left = document.getElementById("icon-apps").offsetLeft + "px";
+    window.onresize = function() {
+        document.getElementById("apps-dropdown").style.left = document.getElementById("icon-apps").offsetLeft + "px";
+    }
+
     document.oncontextmenu = function() {
         return false;
     }
-    document.getElementById("workspace").addEventListener('mousedown', showContextMenu, false);
+
+    document.getElementById("workspace").oncontextmenu = function(event) {
+        document.getElementById("context-menu").style.left = event.clientX + "px"
+        document.getElementById("context-menu").style.top = event.clientY + "px"
+        document.getElementById("context-menu").style.display = "block"
+        document.getElementById("workspace").addEventListener('mousedown', hideContextMenu, false);
+    }
+
     //create loading screen to fully load all content
     loadingScreen(document.getElementById("loading-label"), 100);
 
@@ -44,17 +57,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
-function showContextMenu(event) {
-    event.preventDefault();
-    var targetElement = (event.target || event.srcElement);
-    if(event.button === 2 && targetElement.getAttribute('class') !== "modal-wrapper" && targetElement.parentNode.id !== "settings-modal") {
-        console.log(targetElement);
-        document.getElementById("context-menu").style.left = event.clientX + "px"
-        document.getElementById("context-menu").style.top = event.clientY + "px"
-        document.getElementById("context-menu").style.display = "block"
-    } else if (event.button !== 2 && event.target.id !== "context-menu") {
-        document.getElementById("context-menu").style.display = "none"
-    }
+function hideContextMenu() {
+    document.getElementById("context-menu").style.display = "none";
 }
 
 
@@ -161,7 +165,7 @@ function makeDraggable(id) {
         var self = this;
         _on(element.getElementsByClassName('modal-header')[0], 'mousedown', function (e) {
             var elementClass = (e.target || e.srcElement).getAttribute('class');
-            if(elementClass !== "window-buttons" || elementClass !== "fas") {
+            if(elementClass !== "window-buttons") {
                 isDragReady = true;
                 e.preventDefault();
                 //crossbrowser mouse pointer values
@@ -499,13 +503,28 @@ function changeHover() {
         topBarElement[i].addEventListener('mouseover',topBarHover,false);
         topBarElement[i].addEventListener('mouseout',topBarHover,false);
     }
-
     function topBarHover(event) {
         if (event.type == 'mouseover') {
             event.target.style.background = settingsAppWindow.hover
         }
         if (event.type == 'mouseout') {
             event.target.style.background = ""
+        }
+    }
+}
+
+function changeSearchHover() {
+
+    var searchElement =document.querySelector('#search-modal .hover-element');
+    searchElement.addEventListener('mouseover',searchHover,false);
+
+    function searchHover(event) {
+        if (event.type == 'mouseover') {
+            event.target.style.backgroundColor = settingsAppWindow.hover
+        }
+        if (event.type == 'mouseout') {
+            event.target.style.backgroundColor = "";
+            event.target.style.background = "";
         }
     }
 }
