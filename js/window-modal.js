@@ -1,7 +1,7 @@
 // register modal component
 var windowModalComponent = Vue.component("modal", {
-  template:`
-  <transition name="modal" @after-enter="initalizeFunctions();">
+    template:`
+    <transition name="modal" @after-enter="initalizeFunctions();">
       <div class="modal-wrapper"  @mousedown="putFocusOnCurrent()">
           <div class="modal-container">
               <div class='resizers'>
@@ -32,9 +32,9 @@ var windowModalComponent = Vue.component("modal", {
               </div>
           </div>
       </div>
-  </transition>
-  `,
-  methods: {
+    </transition>
+    `,
+    methods: {
       initalizeFunctions: function () {
           var id = "#" + this.$el.parentNode.id
           window.onresize = function() {
@@ -81,7 +81,7 @@ var windowModalComponent = Vue.component("modal", {
           }
           changeHighlightedColour();
       }
-  }
+    }
 
 });
 
@@ -195,7 +195,7 @@ var searchAppWindow = new Vue ({
         keymonitor: function(event) {
             var searchValue = document.getElementById("search-text").value;
             if(event.key == "Enter" && searchValue !== "") {
-               window.open("http://google.com/search?q=" + searchValue, '_blank');
+               window.open("http://google.com/search?q=" + searchValue, "_blank");
             }
         },
         searchContent: function() {
@@ -206,8 +206,6 @@ var searchAppWindow = new Vue ({
         }
     }
 });
-
-
 
 // start settings app
 var settingsAppButton = new Vue({

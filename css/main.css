@@ -14,8 +14,13 @@ body {
     font-family: "Courier New";
 }
 
-a {
+a, a:visited, a:active {
     color: inherit;
+}
+a:hover {
+    box-shadow: 0 0 3px #ccc;
+    border-radius: 4px;
+    text-decoration: none;
 }
 
 /***********************************
@@ -36,9 +41,16 @@ a {
     width: 100%;
     height: 100%;
     background: #fff;
-    /* opacity: 0.9; */
     animation: blur 0.5s forwards;
     animation-delay: 3s;
+}
+#loading-image {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: #ccc;
+    font-weight: bold;
 }
 #loading-label {
     position: absolute;
@@ -557,17 +569,17 @@ a {
 }
 
 #calculator-modal .calculator-wrapper {
-  background-color: #d6d6c7;
-  overflow: hidden;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 120px repeat(5, 1fr);
-  grid-gap: 1px;
-  margin: 0;
-  height: 100%;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+    background-color: #d6d6c7;
+    overflow: hidden;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 120px repeat(5, 1fr);
+    grid-gap: 1px;
+    margin: 0;
+    height: 100%;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 #calculator-modal .display-wrapper {
@@ -585,12 +597,12 @@ a {
 }
 
 #calculator-modal .evaluate {
-  overflow: hidden;
-  margin: 0;
-  padding-right: 2px;
-  color: #bdd3de;
-  font-size: 2rem;
-  letter-spacing: 1px;
+    overflow: hidden;
+    margin: 0;
+    padding-right: 2px;
+    color: #bdd3de;
+    font-size: 2rem;
+    letter-spacing: 1px;
 }
 
 #zero {
@@ -607,13 +619,13 @@ a {
 }
 
 #calculator-modal button {
-  border: none;
-  font-size: 2.4rem;
-  background-color: #FFFFFB;
-  font-weight: 300;
+    border: none;
+    font-size: 2.4rem;
+    background-color: #FFFFFB;
+    font-weight: 300;
     font-family : inherit;
-
 }
+
 #calculator-modal button:hover {
     cursor: pointer;
     background-color: #e5e5e1;
@@ -629,7 +641,6 @@ a {
 
 #calculator-modal .clear {
   background-color: #bdd3de;
-
 }
 #calculator-modal .clear:hover {
     background-color: #a7bbc4;
@@ -641,8 +652,8 @@ a {
 
 #calculator-modal button[class='operator'],
 #calculator-modal button[class='equals'] {
-  background-color: #FF5964;
-  color: #fff;
+    background-color: #FF5964;
+    color: #fff;
 }
 #calculator-modal button[class='operator']:hover, button[class='equals']:hover {
     background-color: #e5505a;
@@ -670,7 +681,6 @@ a {
     position: relative;
     height: 16px;
     padding: 12px 14px;
-
     border-radius: 4px;
     cursor: pointer;
 }
@@ -902,6 +912,35 @@ input[type="radio"] {
         height: 30px;
         width: 5px;
     }
+    .modal-wrapper {
+        top: 40px;
+        left: 0;
+    }
+    #calculator-modal .calculator-wrapper {
+        background-color: #d6d6c7;
+        overflow: hidden;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 80px repeat(5, 1fr);
+        grid-gap: 1px;
+        margin: 0;
+        height: 100%;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+
+    }
+    #calculator-modal .display-wrapper {
+        padding: 1rem 1.5rem;
+        font-size: 2rem;
+    }
+    #calculator-modal .evaluate {
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+    #calculator-modal button {
+        font-size: 2rem;
+    }
 }
 
 /*****Low Res Tablet, Phone-landscape*****/
@@ -942,6 +981,31 @@ input[type="radio"] {
     #loading-cursor {
         height: 30px;
         width: 5px;
+    }
+    #calculator-modal .calculator-wrapper {
+        background-color: #d6d6c7;
+        overflow: hidden;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 80px repeat(5, 1fr);
+        grid-gap: 1px;
+        margin: 0;
+        height: 100%;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+
+    }
+    #calculator-modal .display-wrapper {
+        padding: 1rem 1.5rem;
+        font-size: 2rem;
+    }
+    #calculator-modal .evaluate {
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+    #calculator-modal button {
+        font-size: 1rem;
     }
 }
 
