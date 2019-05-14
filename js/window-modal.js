@@ -40,6 +40,7 @@ var windowModalComponent = Vue.component("modal", {
           window.onresize = function() {
               if(window.mobilecheck()) {
                   onMobileWindowModal(id);
+                  document.getElementById("apps-dropdown").style.left = document.getElementById("icon-apps").offsetLeft + "px";
               }
           }
           if(window.mobilecheck()) {
