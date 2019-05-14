@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         return check;
         };
         if(window.mobilecheck()) {
-            document.querySelector("body").setAttribute("class","mobile-view")
+            document.querySelector("body").setAttribute("class","mobile-view");
         }
     });
 
