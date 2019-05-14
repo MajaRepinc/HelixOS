@@ -2,15 +2,24 @@
 
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>helixOS</title>
-  <meta name="description" content="WebOS">
-  <meta name="author" content="Maja Repinc">
-  <!-- main core stylesheet -->
-  <link rel="stylesheet" href="css/main.css">
-  <script src="js/vue.js"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>helixOS</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/img/favicon/site.webmanifest">
+    <link rel="mask-icon" href="assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="description" content="WebOS">
+    <meta name="author" content="Maja Repinc">
+    <!-- main core stylesheet -->
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vue.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 </head>
 
@@ -19,24 +28,50 @@
         <div id="top-bar">
             <div id="left-top" class="top-bar-component">
 
-                <div id="icon-about" class="left-top-component hover-element" title="About" @click="showAboutWindow">
-                    <i class="fas fa-info-circle"></i>
-                </div>
-
-                <div id="icon-settings" class="left-top-component hover-element" title="Settings" @click="showSettingsWindow">
-                    <i class="fas fa-cog"></i>
-                </div>
-
-                <div id="icon-apps" class="left-top-component hover-element" title="Apps">
-                    <i class="fas fa-th-large"></i>
-                </div>
-
-                <div id="apps-dropdown">
-                    <div id="icon-search" title="Search" class="left-top-component hover-element" @click="showSearchWindow">
-                        <i class="fas fa-search"></i> <span class="apps-label">Search</span>
+                <div id="desktop-menu">
+                    <div id="icon-about" class="left-top-component hover-element" title="About" @click="showAboutWindow">
+                        <i class="fas fa-info-circle"></i>
                     </div>
-                    <div id="icon-calculator" title="Calculator" class="left-top-component hover-element" @click="showCalculatorWindow">
-                        <i class="fas fa-calculator"></i> <span class="apps-label">Calculator</span>
+
+                    <div id="icon-settings" class="left-top-component hover-element" title="Settings" @click="showSettingsWindow">
+                        <i class="fas fa-cog"></i>
+                    </div>
+
+                    <div id="icon-apps" class="left-top-component hover-element" title="Apps">
+                        <i class="fas fa-th-large"></i>
+                    </div>
+
+                    <div id="apps-dropdown">
+                        <div id="icon-search" title="Search" class="left-top-component hover-element" @click="showSearchWindow">
+                            <i class="fas fa-search"></i> <span class="apps-label">Search</span>
+                        </div>
+                        <div id="icon-calculator" title="Calculator" class="left-top-component hover-element" @click="showCalculatorWindow">
+                            <i class="fas fa-calculator"></i> <span class="apps-label">Calculator</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="mobile-dropdown">
+                    <div id="mobile-dropdown-icon" class="left-top-component hover-element"><i class="fas fa-ellipsis-v"></i></div>
+                    <div id="mobile-dropdown-items">
+                        <div id="dropdown-icon-about" class="left-top-component hover-element" title="About" @click="showAboutWindow">
+                            <i class="fas fa-info-circle"></i> About
+                        </div>
+
+                        <div id="dropdown-icon-settings" class="left-top-component hover-element" title="Settings" @click="showSettingsWindow">
+                            <i class="fas fa-cog"></i> Settings
+                        </div>
+
+                        <div id="dropdown-icon-apps" class="left-top-component hover-element" title="Apps">
+                            <i class="fas fa-th-large"></i> Apps <i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div id="dropdown-apps-dropdown">
+                            <div id="dropdown-icon-search" title="Search" class="left-top-component hover-element" @click="showSearchWindow">
+                                <i class="fas fa-search"></i> <span class="apps-label">Search</span>
+                            </div>
+                            <div id="dropdown-icon-calculator" title="Calculator" class="left-top-component hover-element" @click="showCalculatorWindow">
+                                <i class="fas fa-calculator"></i> <span class="apps-label">Calculator</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -341,6 +376,10 @@
     <!-- load script -->
     <script src="js/script.js"></script>
     <script src="js/window-modal.js"></script>
+    <script src="js/window-about.js"></script>
+    <script src="js/window-calculator.js"></script>
+    <script src="js/window-search.js"></script>
+    <script src="js/window-settings.js"></script>
     <script src="js/top-bar-components.js"></script>
 
 </body>

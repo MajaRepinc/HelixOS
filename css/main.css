@@ -208,8 +208,56 @@ a:hover {
 }
 .apps-label {
     padding-right: 15px;
-    font-weight: bold;
 }
+#mobile-dropdown-icon:hover + #mobile-dropdown-items {
+    display: block;
+}
+#mobile-dropdown-items:hover {
+    display: block;
+}
+#mobile-dropdown {
+    display:none;
+}
+#mobile-dropdown-icon {
+    width: 40px;
+}
+#mobile-dropdown-items {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 40px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #cccccc;
+    border-top: none;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    z-index: 500;
+    min-width: 150px;
+    max-width: 170px;
+}
+
+#mobile-dropdown-items .left-top-component {
+    border-bottom: 1px solid #cccccc;
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-size: 0.9em;
+    
+}
+#mobile-dropdown .fa-chevron-right{
+   float: right;
+}
+#dropdown-apps-dropdown {
+    display: none;
+}
+#dropdown-icon-apps:hover + #dropdown-apps-dropdown {
+    display: block;
+}
+#dropdown-apps-dropdown:hover {
+    display: block;
+}
+
 #middle-top {
     width: 65%;
     display: inline-block;
@@ -1011,11 +1059,20 @@ input[type="radio"] {
 
 /*****Phone-portrait*****/
 @media (min-width: 320px) and (max-width: 480px) {
+    #mobile-dropdown {
+        display: block;
+    }
+    #desktop-menu {
+        display: none;
+    }
     #middle-top {
-        width: 50%;
+        width: 75%;
+    }
+    .top-bar-element {
+        width: 40px;
     }
     #left-top {
-        width: 35%;
+        width: 10%;
     }
     #right-top {
         width: 15%;
@@ -1070,6 +1127,9 @@ input[type="radio"] {
     #loading-cursor {
         height: 30px;
         width: 5px;
+    }
+    #loading-image {
+        font-size: 0.9em;
     }
 
 }
