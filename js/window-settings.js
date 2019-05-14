@@ -139,6 +139,8 @@ var settingsAppWindow = new Vue ({
                     document.getElementById("top-bar").style.color = themes[j].topBarFontColour;
                     document.getElementById("apps-dropdown").style.backgroundColor = themes[j].innerWindowColour;
                     document.getElementById("apps-dropdown").style.color = themes[j].innerWindowFontColour;
+                    document.getElementById("mobile-dropdown-items").style.backgroundColor = themes[j].innerWindowColour;
+                    document.getElementById("mobile-dropdown-items").style.color = themes[j].innerWindowFontColour;
                     label.innerText = themes[j].name;
                     this.theme = themes[j].name;
                     document.getElementById("selected-theme").innerText = themes[j].name;
@@ -274,6 +276,7 @@ var settingsAppWindow = new Vue ({
             this.hoverContext = "" + changeColorLuminance(colourInnerWindow, 0.7)
             this.innerWindowCol = colourInnerWindow;
             document.getElementById("apps-dropdown").style.backgroundColor = colourInnerWindow;
+            document.getElementById("mobile-dropdown-items").style.backgroundColor = colourInnerWindow;
             checkColourSettings();
             this.disableSelectedTheme();
             changeContextMenuHover();
@@ -282,6 +285,7 @@ var settingsAppWindow = new Vue ({
             var colourInnerWindowFont = document.querySelector("#colour-innerwindow-font input").value;
             this.innerWindowFontCol = colourInnerWindowFont;
             document.getElementById("apps-dropdown").style.color = colourInnerWindowFont;
+            document.getElementById("mobile-dropdown-items").style.color = colourInnerWindowFont;
             checkColourSettings();
             this.disableSelectedTheme();
         },
