@@ -6,19 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>helixOS</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/img/favicon/site.webmanifest">
-    <link rel="mask-icon" href="assets/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+    <link rel="manifest" href="./favicon/site.webmanifest">
+    <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
     <meta name="description" content="WebOS">
     <meta name="author" content="Maja Repinc">
     <!-- main core stylesheet -->
-    <link rel="stylesheet" href="css/main.css">
-    <script src="js/vue.js"></script>
+    <link rel="stylesheet" href="../src/css/main.css">
+    <!-- <script src="js/vue.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 </head>
@@ -368,19 +369,19 @@
     <div id="loading">
         <div id="loading-label"><div id="loading-text">loading...</div></div>
         <div id="loading-image">
-            <img src="assets/img/helixos-loading-logo.png">
+            <img src="../src/assets/img/helixos-loading-logo.png">
             <div id="loading-image-text">Maja Repinc, 2019</div>
         </div>
     </div>
 
     <!-- load script -->
-    <script src="js/script.js"></script>
-    <script src="js/window-modal.js"></script>
-    <script src="js/window-about.js"></script>
-    <script src="js/window-calculator.js"></script>
-    <script src="js/window-search.js"></script>
-    <script src="js/window-settings.js"></script>
-    <script src="js/top-bar-components.js"></script>
+    <script src="../src/components/script.js"></script>
+    <script src="../src/components/window-modal.js"></script>
+    <script src="../src/components/window-about.js"></script>
+    <script src="../src/components/window-calculator.js"></script>
+    <script src="../src/components/window-search.js"></script>
+    <script src="../src/components/window-settings.js"></script>
+    <script src="../src/components/top-bar-components.js"></script>
 
 </body>
 </html>
